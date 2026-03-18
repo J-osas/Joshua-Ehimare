@@ -1,0 +1,38 @@
+backend:
+  name: github
+  repo: your-username/your-repo-name # Replace with your actual repo
+  branch: main
+
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Reading Time", name: "readingTime", widget: "string" }
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Tags", name: "tags", widget: "list" }
+
+  - name: "projects"
+    label: "Projects"
+    folder: "src/content/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Category", name: "category", widget: "select", options: ["Branding", "Web Design", "SEO"] }
+      - { label: "Year", name: "year", widget: "string" }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Challenge", name: "challenge", widget: "text" }
+      - { label: "Process", name: "process", widget: "text" }
+      - { label: "Solution", name: "solution", widget: "text" }
+      - { label: "Results", name: "results", widget: "text", required: false }
+      - { label: "Tags", name: "tags", widget: "list" }
