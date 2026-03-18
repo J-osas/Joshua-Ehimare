@@ -119,14 +119,18 @@ export function About() {
         >
           {/* Left Col */}
           <div className="flex flex-col">
-            <div className="aspect-[3/4] w-full bg-bg-3 border border-[rgba(255,77,0,0.35)] flex items-center justify-center relative">
-              <span className="font-mono text-[11px] text-accent opacity-50 uppercase tracking-widest">
-                [ Photo ]
-              </span>
+            <div className="relative w-full aspect-[3/4] 
+              overflow-hidden rounded-[4px] 
+              border border-[rgba(255,77,0,0.35)]">
+              <img
+                src="/images/joshua-ehimare.jpg"
+                alt="Joshua Ehimare"
+                className="w-full h-full object-cover object-top"
+              />
             </div>
             <div className="flex flex-wrap gap-3 mt-8">
               <div className="bg-bg-3 border border-border font-mono text-[11px] text-text-2 px-[18px] py-2 rounded-[2px]">
-                3+ Years Experience
+                6+ Years Experience
               </div>
               <div className="bg-bg-3 border border-border font-mono text-[11px] text-text-2 px-[18px] py-2 rounded-[2px]">
                 20+ Projects Delivered
@@ -296,7 +300,7 @@ export function About() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-0 max-w-[1200px] mx-auto">
           {[
             { val: "20+", label: "Projects Completed" },
-            { val: "3+", label: "Years Experience" },
+            { val: "6+", label: "Years Experience" },
             { val: "100%", label: "Satisfaction" },
             { val: "15+", label: "Brands Built" }
           ].map((stat, idx) => (

@@ -2,47 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { cn } from '../lib/utils';
+import { projects } from '../data/content';
 
-const projects = [
-  {
-    num: "01", title: "Vibrant Brand Identity", 
-    category: "BRANDING", slug: "vibrant-brand-identity",
-    desc: "Complete visual overhaul for a modern tech startup.",
-    image: "https://picsum.photos/seed/vibrant/800/450"
-  },
-  {
-    num: "02", title: "Nexus Digital Experience",
-    category: "WEB DESIGN", slug: "nexus-digital-experience",
-    desc: "Immersive e-commerce for a high-end furniture brand.",
-    image: "https://picsum.photos/seed/nexus/800/450"
-  },
-  {
-    num: "03", title: "Orbit SEO Strategy",
-    category: "SEO", slug: "orbit-seo-strategy",
-    desc: "Data-driven content strategy for a SaaS platform.",
-    image: "https://picsum.photos/seed/orbit/800/450"
-  },
-  {
-    num: "04", title: "Pulse Brand System",
-    category: "BRANDING", slug: "pulse-brand-system",
-    desc: "Brand identity and guidelines for a fintech startup.",
-    image: "https://picsum.photos/seed/pulse/800/450"
-  },
-  {
-    num: "05", title: "Horizon Web Presence",
-    category: "WEB DESIGN", slug: "horizon-web-presence",
-    desc: "Conversion-focused website for a B2B software company.",
-    image: "https://picsum.photos/seed/horizon/800/450"
-  },
-  {
-    num: "06", title: "Apex Growth Strategy",
-    category: "STRATEGY", slug: "apex-growth-strategy",
-    desc: "Full digital strategy for a fast-scaling e-commerce brand.",
-    image: "https://picsum.photos/seed/apex/800/450"
-  }
-];
-
-const categories = ["ALL", "BRANDING", "WEB DESIGN", "SEO", "STRATEGY"];
+const categories = ["ALL", "WEB DESIGN", "UI/UX DESIGN"];
 
 export function Work() {
   const [activeFilter, setActiveFilter] = useState("ALL");
@@ -107,8 +69,8 @@ export function Work() {
             </p>
 
             <div className="text-right">
-              <span className="font-mono text-[11px] text-text-2 block mb-1">— 06 PROJECTS</span>
-              <span className="font-mono text-[11px] text-text-2 block">2019–2024</span>
+              <span className="font-mono text-[11px] text-text-2 block mb-1">— {projects.length.toString().padStart(2, '0')} PROJECTS</span>
+              <span className="font-mono text-[11px] text-text-2 block">2024</span>
             </div>
           </motion.div>
         </div>
@@ -180,18 +142,19 @@ export function Work() {
 
                   {/* RIGHT side (45%) */}
                   <div className="w-full lg:w-[45%]">
-                    <div className="aspect-video bg-bg-3 border border-border rounded-[4px] overflow-hidden flex items-center justify-center relative group-hover:border-accent/40 transition-colors duration-300">
-                      <img 
-                        src={project.image} 
-                        alt={project.title} 
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
+                    <div className="relative w-full aspect-video overflow-hidden 
+                      rounded-[4px] border border-[var(--border)] 
+                      group-hover:border-[rgba(255,77,0,0.4)] 
+                      transition-colors duration-300">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover object-top
+                          grayscale group-hover:grayscale-0
+                          scale-100 group-hover:scale-105
+                          transition-all duration-500 ease-out"
                         referrerPolicy="no-referrer"
                       />
-                      <div className="absolute inset-0 flex items-center justify-center bg-bg-3/20 opacity-0 group-hover:opacity-0 transition-opacity">
-                        <span className="font-mono text-[11px] text-text-3 uppercase tracking-widest">
-                          [ Project Image ]
-                        </span>
-                      </div>
                     </div>
                   </div>
                 </Link>

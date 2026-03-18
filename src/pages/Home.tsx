@@ -116,14 +116,14 @@ export function Home() {
         </div>
 
         <div className="flex flex-col border-t border-border">
-          {projects.slice(0, 3).map((project, index) => (
+          {projects.slice(0, 3).map((project) => (
             <Link 
-              key={project.id} 
-              to={`/case-study/${project.id}`} 
+              key={project.slug} 
+              to={`/work/${project.slug}`} 
               className="group flex flex-col md:flex-row justify-between items-center py-12 border-b border-border no-underline transition-all duration-500 hover:bg-surface/50 px-4"
             >
               <div className="flex items-center gap-8 md:gap-16 w-full md:w-auto">
-                <span className="font-mono text-[14px] text-text-3">0{index + 1}</span>
+                <span className="font-mono text-[14px] text-text-3">{project.num}</span>
                 <h3 className="font-display text-[clamp(28px,4vw,52px)] font-semibold transition-transform duration-500 group-hover:translate-x-4">
                   {project.title} <span className="text-accent opacity-0 group-hover:opacity-100 transition-opacity ml-4">→</span>
                 </h3>
@@ -148,16 +148,15 @@ export function Home() {
       <section className="py-[120px] px-[var(--page-padding)] bg-surface flex flex-col lg:flex-row gap-20 items-center">
         <div className="w-full lg:w-1/2 relative">
           <div className="aspect-[4/5] bg-bg-3 rounded-[2px] overflow-hidden">
-            <img 
-              src="https://picsum.photos/seed/joshua/800/1000" 
-              alt="Joshua Ehimare" 
-              className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
-              referrerPolicy="no-referrer"
+            <img
+              src="/images/joshua-ehimare.jpg"
+              alt="Joshua Ehimare"
+              className="w-full h-full object-cover object-top"
             />
           </div>
           <div className="absolute -bottom-10 -right-10 hidden md:flex gap-4">
             <div className="bg-accent text-background p-6 rounded-[2px] font-display font-bold text-center">
-              <span className="block text-4xl">3+</span>
+              <span className="block text-4xl">6+</span>
               <span className="text-[10px] uppercase tracking-widest">Years Exp.</span>
             </div>
             <div className="bg-foreground text-background p-6 rounded-[2px] font-display font-bold text-center">
@@ -189,7 +188,7 @@ export function Home() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-[1200px] mx-auto">
           {[
             { num: '20', label: 'Projects Completed' },
-            { num: '3', label: 'Years Experience' },
+            { num: '6', label: 'Years Experience' },
             { num: '100', label: 'Client Satisfaction' },
             { num: '15', label: 'Brands Built' }
           ].map((stat, i) => (

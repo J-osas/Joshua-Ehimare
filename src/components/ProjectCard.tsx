@@ -27,7 +27,7 @@ export function ProjectCard({ project }: { project: Project }) {
             {project.title}
           </h3>
           <p className="text-secondary-text text-sm line-clamp-2">
-            {project.description}
+            {project.desc}
           </p>
         </div>
         <div className="absolute inset-0 bg-accent/90 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">

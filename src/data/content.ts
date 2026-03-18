@@ -1,17 +1,14 @@
 export interface Project {
-  id: string;
-  slug: string;
+  num: string;
   title: string;
-  client?: string;
   category: string;
-  year: string;
+  slug: string;
+  desc: string;
   image: string;
-  description: string;
-  challenge: string;
-  process: string;
-  solution: string;
-  results?: string;
-  tags: string[];
+  url: string;
+  isLive: boolean;
+  isFigma: boolean;
+  year: string;
 }
 
 export interface BlogPost {
@@ -28,79 +25,100 @@ export interface BlogPost {
 
 export const projects: Project[] = [
   {
-    id: '1',
-    slug: 'vibrant-brand',
-    title: 'Vibrant Brand Identity',
-    client: 'Vibrant Energy',
-    category: 'Branding',
-    year: '2024',
-    image: 'https://picsum.photos/seed/vibrant/1920/1080',
-    description: 'A complete visual overhaul for a modern tech startup focusing on sustainable energy.',
-    challenge: 'The brand felt dated and disconnected from its mission of clean energy.',
-    process: 'We explored minimalist geometric shapes and a bold, high-contrast color palette.',
-    solution: 'A dynamic identity system that scales across digital and physical touchpoints.',
-    results: '25% increase in brand recognition within the first quarter.',
-    tags: ['Brand Strategy', 'Visual Identity', 'Logo Design']
+    num: "01",
+    title: "Manifield Solicitors",
+    category: "WEB DESIGN",
+    slug: "manifield-solicitors",
+    desc: "A professional web presence for a modern law firm.",
+    image: "/images/projects/manifield-solicitors.webp",
+    url: "https://manifieldsolicitors.com/",
+    isLive: true,
+    isFigma: false,
+    year: "2024"
   },
   {
-    id: '2',
-    slug: 'nexus-web',
-    title: 'Nexus Digital Experience',
-    client: 'Nexus Furniture',
-    category: 'Web Design',
-    year: '2023',
-    image: 'https://picsum.photos/seed/nexus/1920/1080',
-    description: 'An immersive e-commerce platform for high-end furniture.',
-    challenge: 'The previous site was slow and lacked the premium feel required for luxury goods.',
-    process: 'Focusing on high-quality imagery and smooth transitions using Framer Motion.',
-    solution: 'A headless Shopify build with a custom React frontend.',
-    results: '40% improvement in conversion rate.',
-    tags: ['E-commerce', 'UX/UI', 'React']
+    num: "02",
+    title: "FocusPoint",
+    category: "UI/UX DESIGN",
+    slug: "focuspoint",
+    desc: "E-commerce UI design for a premium camera and gear store.",
+    image: "/images/projects/focuspoint.webp",
+    url: "https://www.figma.com/design/hniywPtcQGw0kcHvFjxGoV/FocusPoint?node-id=1-1059&t=sNo3BGGQlIufOh0m-1",
+    isLive: false,
+    isFigma: true,
+    year: "2024"
   },
   {
-    id: '3',
-    slug: 'orbit-seo',
-    title: 'Orbit SEO Strategy',
-    client: 'Orbit SaaS',
-    category: 'SEO',
-    year: '2024',
-    image: 'https://picsum.photos/seed/orbit/1920/1080',
-    description: 'Data-driven content strategy for a SaaS platform.',
-    challenge: 'Organic traffic had plateaued despite regular content publishing.',
-    process: 'In-depth keyword research and technical SEO audit.',
-    solution: 'A revamped content architecture and internal linking strategy.',
-    results: '150% increase in organic search traffic.',
-    tags: ['Content Strategy', 'Technical SEO', 'Analytics']
+    num: "03",
+    title: "TechBridge Africa",
+    category: "UI/UX DESIGN",
+    slug: "techbridge-africa",
+    desc: "A bold mobile platform connecting African tech talent and learners.",
+    image: "/images/projects/techbridge-africa.webp",
+    url: "https://www.figma.com/design/dJJql7G1xuIwPT5qUFqacK/TechBridge-Africa?node-id=0-1&t=geZRktYeKs0So1Ly-1",
+    isLive: false,
+    isFigma: true,
+    year: "2024"
   },
   {
-    id: '4',
-    slug: 'lumina-app',
-    title: 'Lumina Mobile App',
-    client: 'Lumina Health',
-    category: 'App Design',
-    year: '2023',
-    image: 'https://picsum.photos/seed/lumina/1920/1080',
-    description: 'A wellness tracking application designed for mental health awareness.',
-    challenge: 'Users found existing health apps overwhelming and stressful to use.',
-    process: 'User interviews and empathetic design workshops to identify core needs.',
-    solution: 'A calming, minimalist interface with gentle notifications and progress tracking.',
-    results: 'Reached 50k downloads in the first month with a 4.8 star rating.',
-    tags: ['Mobile Design', 'UX Research', 'HealthTech']
+    num: "04",
+    title: "Chinonso Nelson",
+    category: "WEB DESIGN",
+    slug: "chinonso-nelson",
+    desc: "Personal brand website for a marketing strategist.",
+    image: "/images/projects/chinonso-nelson.webp",
+    url: "https://chinonsonelson.com/",
+    isLive: true,
+    isFigma: false,
+    year: "2024"
   },
   {
-    id: '5',
-    slug: 'zenith-campaign',
-    title: 'Zenith Marketing Campaign',
-    client: 'Zenith Watches',
-    category: 'Digital Marketing',
-    year: '2024',
-    image: 'https://picsum.photos/seed/zenith/1920/1080',
-    description: 'A multi-channel digital campaign for the launch of a new luxury watch collection.',
-    challenge: 'Breaking into a competitive market dominated by legacy brands.',
-    process: 'Influencer partnerships combined with targeted social media advertising.',
-    solution: 'A storytelling-driven campaign focusing on the craftsmanship and heritage.',
-    results: 'Sold out the limited edition collection within 48 hours.',
-    tags: ['Marketing', 'Social Media', 'Content Creation']
+    num: "05",
+    title: "Mapway Real Estate",
+    category: "WEB DESIGN",
+    slug: "mapway-real-estate",
+    desc: "Property investment platform for a growing Nigerian real estate brand.",
+    image: "/images/projects/mapway-real-estate.webp",
+    url: "https://mapway.com.ng/",
+    isLive: true,
+    isFigma: false,
+    year: "2024"
+  },
+  {
+    num: "06",
+    title: "Porter and Bell",
+    category: "WEB DESIGN",
+    slug: "porter-and-bell",
+    desc: "A vibrant web presence for Lagos-based cleaning agency.",
+    image: "/images/projects/porter-and-bell.webp",
+    url: "https://porterandbell.ng/",
+    isLive: true,
+    isFigma: false,
+    year: "2024"
+  },
+  {
+    num: "07",
+    title: "Apprisma AI",
+    category: "WEB DESIGN",
+    slug: "apprisma-ai",
+    desc: "Performance-driven website for an AI-powered marketing agency.",
+    image: "/images/projects/apprisma-ai.jpg",
+    url: "https://apprisma.co.uk/",
+    isLive: true,
+    isFigma: false,
+    year: "2024"
+  },
+  {
+    num: "08",
+    title: "Birdie NG",
+    category: "WEB DESIGN",
+    slug: "birdie-ng",
+    desc: "Domestic services platform connecting skilled providers with homes.",
+    image: "/images/projects/birdie-ng.jpg.jpg",
+    url: "https://birdie.ng/",
+    isLive: true,
+    isFigma: false,
+    year: "2024"
   }
 ];
 
