@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Name — Joshua Ehimare</title>
+    <meta name="description" content="Case study for Project Name by Joshua Ehimare.">
+    
+    <!-- Fonts -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0D0D0D;
+            --accent: #FF4D00;
+            --text: #F5F0E8;
+            --text-secondary: #888880;
+            --surface: #161616;
+            --border: #2A2A2A;
+            --font-display: 'Clash Display', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --nav-height: 80px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            font-weight: 600;
+            line-height: 1.1;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            background: rgba(13, 13, 13, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+
+        nav .container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: -1px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .btn-outline {
+            padding: 10px 20px;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        /* Mobile Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: var(--text);
+            transition: 0.3s;
+        }
+
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(13, 13, 13, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            z-index: 1050;
+            transform: translateY(-100%);
+            transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .mobile-overlay.active {
+            transform: translateY(0);
+        }
+
+        .mobile-overlay a {
+            font-family: var(--font-display);
+            font-size: 48px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Project Hero */
+        .project-hero {
+            padding-top: calc(var(--nav-height) + 40px);
+            padding-bottom: 80px;
+        }
+
+        .back-link {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 40px;
+        }
+
+        .hero-img-placeholder {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #1A1A1A;
+            border: 2px dashed var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 48px;
+        }
+
+        .hero-img-placeholder span {
+            font-family: var(--font-mono);
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .project-title {
+            font-size: clamp(48px, 8vw, 80px);
+            margin-bottom: 24px;
+        }
+
+        .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .meta-row span b {
+            color: var(--text);
+            font-weight: 400;
+        }
+
+        .slash {
+            color: var(--accent);
+        }
+
+        /* Overview Block */
+        .overview {
+            padding: 80px 0;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 80px;
+        }
+
+        .overview h2 {
+            font-size: 32px;
+            margin-bottom: 24px;
+        }
+
+        .overview p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+        }
+
+        .stats-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .stat-item label {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .stat-item span {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        /* Sections General */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-number {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            font-family: var(--font-mono);
+            font-size: 120px;
+            font-weight: 700;
+            color: var(--accent);
+            opacity: 0.1;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .section-heading {
+            font-size: 48px;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Challenge */
+        .challenge p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin-bottom: 24px;
+        }
+
+        /* Process */
+        .process-row {
+            display: flex;
+            align-items: center;
+            gap: 80px;
+            margin-bottom: 100px;
+        }
+
+        .process-row:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .process-img {
+            flex: 1;
+            aspect-ratio: 4/3;
+            background: #1A1A1A;
+            border: 2px dashed var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .process-img span {
+            font-family: var(--font-mono);
+            color: var(--accent);
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .process-text {
+            flex: 1;
+        }
+
+        .process-text .step-num {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .process-text h3 {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .process-text p {
+            color: var(--text-secondary);
+        }
+
+        /* Solution */
+        .solution-main {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #1A1A1A;
+            border: 2px dashed var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .solution-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .solution-grid .img {
+            aspect-ratio: 4/3;
+            background: #1A1A1A;
+            border: 2px dashed var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Results */
+        .results {
+            background: var(--surface);
+            padding: 120px 0;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            text-align: center;
+        }
+
+        .result-item .num {
+            font-size: 80px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .result-item label {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Next Project */
+        .next-project {
+            padding: 100px 0;
+            border-top: 1px solid var(--border);
+            display: block;
+            transition: 0.4s;
+        }
+
+        .next-project:hover {
+            background: var(--surface);
+        }
+
+        .next-project .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .next-label {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .next-title {
+            font-size: clamp(32px, 5vw, 60px);
+        }
+
+        /* Footer */
+        footer {
+            padding: 100px 0 60px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-cta {
+            margin-bottom: 80px;
+        }
+
+        .footer-cta h2 {
+            font-size: clamp(40px, 6vw, 80px);
+            margin-bottom: 32px;
+        }
+
+        .footer-cta h2 span {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .btn-fill {
+            display: inline-block;
+            padding: 16px 40px;
+            background: var(--accent);
+            color: var(--bg);
+            font-family: var(--font-mono);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .btn-fill:hover {
+            transform: scale(1.05);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 12px;
+        }
+
+        .footer-socials a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .overview { grid-template-columns: 1fr; gap: 40px; }
+            .process-row { flex-direction: column !important; gap: 40px; }
+            .results-grid { grid-template-columns: 1fr; gap: 60px; }
+            .next-project .container { flex-direction: column; align-items: flex-start; gap: 16px; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 0 20px; }
+            .section-heading { font-size: 36px; }
+            .footer-bottom { flex-direction: column; align-items: flex-start; gap: 24px; }
+            .solution-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Fade-in Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">JE.</a>
+            <div class="nav-links">
+                <a href="work.html">Work</a>
+                <a href="about.html">About</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a>
+                <a href="contact.html" class="btn-outline">Let's Talk</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay">
+        <a href="work.html">Work</a>
+        <a href="about.html">About</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+    </div>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="container">
+            <a href="work.html" class="back-link">← Back to Work</a>
+            <div class="hero-img-placeholder fade-in">
+                <span>[ Hero Image ]</span>
+            </div>
+            <h1 class="project-title fade-in">Vanguard Studio</h1>
+            <div class="meta-row fade-in">
+                <span>CLIENT: <b>Vanguard Arch</b></span>
+                <span class="slash">/</span>
+                <span>CATEGORY: <b>Web Design</b></span>
+                <span class="slash">/</span>
+                <span>YEAR: <b>2024</b></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="container overview fade-in">
+        <div>
+            <h2>Overview</h2>
+            <p>Vanguard Studio is a leading architectural firm that required a digital presence matching their minimalist and bold physical designs. We embarked on a 6-week journey to redefine their brand identity and build a high-performance portfolio website that showcases their projects with cinematic scale.</p>
+        </div>
+        <div class="stats-card">
+            <div class="stat-item">
+                <label>Role</label>
+                <span>Lead Designer</span>
+            </div>
+            <div class="stat-item">
+                <label>Timeline</label>
+                <span>6 Weeks</span>
+            </div>
+            <div class="stat-item">
+                <label>Tools</label>
+                <span>Figma, Webflow, Notion</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Challenge -->
+    <section class="challenge fade-in">
+        <div class="container">
+            <div class="section-number">01</div>
+            <h2 class="section-heading">The Challenge</h2>
+            <p>The primary challenge was balancing high-resolution imagery with lightning-fast load times. The firm had a massive archive of 4K photography that needed to be accessible without compromising the user experience. Additionally, the navigation needed to be intuitive yet unconventional to reflect their innovative approach to architecture.</p>
+            <p>We needed to create a system that allowed the work to speak for itself, removing all unnecessary UI clutter while maintaining a strong brand presence through typography and motion.</p>
+        </div>
+    </section>
+
+    <!-- Process -->
+    <section class="process fade-in">
+        <div class="container">
+            <div class="section-number">02</div>
+            <h2 class="section-heading">The Process</h2>
+            
+            <div class="process-row fade-in">
+                <div class="process-img"><span>[ Process Image ]</span></div>
+                <div class="process-text">
+                    <span class="step-num">01. STRATEGY</span>
+                    <h3>Discovery & Audit</h3>
+                    <p>We began by auditing their existing assets and identifying the core values of the firm. This phase involved deep-dive workshops to understand their target audience and the emotional impact they wanted their buildings to convey through the screen.</p>
+                </div>
+            </div>
+
+            <div class="process-row fade-in">
+                <div class="process-img"><span>[ Process Image ]</span></div>
+                <div class="process-text">
+                    <span class="step-num">02. DESIGN</span>
+                    <h3>Visual Direction</h3>
+                    <p>Taking inspiration from brutalist architecture, we developed a high-contrast visual system. We focused on a strict grid layout that could be broken by large, full-bleed imagery to create a sense of space and rhythm.</p>
+                </div>
+            </div>
+
+            <div class="process-row fade-in">
+                <div class="process-img"><span>[ Process Image ]</span></div>
+                <div class="process-text">
+                    <span class="step-num">03. BUILD</span>
+                    <h3>Development</h3>
+                    <p>The final phase involved building a custom CMS that allowed the Vanguard team to easily upload new projects while maintaining the strict design standards we set. We implemented advanced lazy-loading and image optimization techniques.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution -->
+    <section class="solution fade-in">
+        <div class="container">
+            <div class="section-number">03</div>
+            <h2 class="section-heading">The Solution</h2>
+            <div class="solution-main fade-in">
+                <span>[ Solution Image ]</span>
+            </div>
+            <div class="solution-grid">
+                <div class="img fade-in"><span>[ Solution Image ]</span></div>
+                <div class="img fade-in"><span>[ Solution Image ]</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results -->
+    <section class="results fade-in">
+        <div class="container">
+            <div class="results-grid">
+                <div class="result-item">
+                    <div class="num">340%</div>
+                    <label>Increase in Inquiries</label>
+                </div>
+                <div class="result-item">
+                    <div class="num">4.2x</div>
+                    <label>Average Session Time</label>
+                </div>
+                <div class="result-item">
+                    <div class="num">#1</div>
+                    <label>Design Award Winner</label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Next Project -->
+    <a href="case-study.html" class="next-project fade-in">
+        <div class="container">
+            <div class="next-label">Next Project →</div>
+            <h2 class="next-title">Lumina E-commerce</h2>
+        </div>
+    </a>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-cta">
+                <h2>Ready to build <br> <span>something bold?</span></h2>
+                <a href="contact.html" class="btn-fill">Start a Project</a>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-left">
+                    <div class="footer-socials">
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">Instagram</a>
+                    </div>
+                    <p>© 2024 JOSHUA EHIMARE. ALL RIGHTS RESERVED.</p>
+                </div>
+                <div class="footer-right">
+                    <p>BASED IN LONDON / REMOTE WORLDWIDE</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        
+        hamburger.addEventListener('click', () => {
+            mobileOverlay.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            
+            // Hamburger animation
+            const spans = hamburger.querySelectorAll('span');
+            if(hamburger.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -7px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+
+        // Intersection Observer for fade-in
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
