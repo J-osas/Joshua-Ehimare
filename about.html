@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — Joshua Ehimare | Designer & Creative</title>
+    <meta name="description" content="Learn more about Joshua Ehimare, a designer and creative strategist focused on purposeful design.">
+    
+    <!-- Fonts -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0A0A0A;
+            --bg-2: #111111;
+            --bg-3: #181818;
+            --accent: #FF4D00;
+            --text: #F0EBE3;
+            --text-2: #6B6560;
+            --text-3: #3A3530;
+            --border: #1E1E1E;
+            --page-padding: 6vw;
+            --font-display: 'Clash Display', sans-serif;
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        html { scroll-behavior: smooth; background-color: var(--bg); }
+        body { background-color: var(--bg); color: var(--text); font-family: var(--font-body); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+        /* Custom Cursor */
+        #cursor { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transition: transform 0.15s ease; transform: translate(-50%, -50%); }
+        .cursor-hover #cursor { transform: translate(-50%, -50%) scale(2.5); mix-blend-mode: difference; }
+
+        /* Navigation */
+        nav { position: fixed; top: 0; left: 0; width: 100%; height: 72px; display: flex; align-items: center; z-index: 1000; transition: background 0.4s ease, backdrop-filter 0.4s ease; padding: 0 var(--page-padding); opacity: 0; animation: fadeIn 0.6s ease 0.1s forwards; }
+        nav.scrolled { background: rgba(10, 10, 10, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        .nav-inner { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { font-family: var(--font-display); font-weight: 700; font-size: 22px; color: var(--accent); text-decoration: none; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-2); text-decoration: none; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-right { display: flex; align-items: center; gap: 24px; }
+        .btn-ghost { border: 1px solid var(--border); color: var(--text-2); padding: 10px 22px; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; text-decoration: none; transition: all 0.3s; }
+        .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* Mobile Nav */
+        .hamburger { display: none; flex-direction: column; gap: 6px; background: none; border: none; z-index: 1100; }
+        .hamburger span { width: 24px; height: 2px; background: var(--text); transition: 0.3s; }
+        .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        .mobile-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px; z-index: 1050; opacity: 0; pointer-events: none; transform: translateY(-20px); transition: 0.4s var(--ease); }
+        .mobile-overlay.active { opacity: 1; pointer-events: all; transform: translateY(0); }
+        .mobile-overlay a { font-family: var(--font-display); font-size: 52px; font-weight: 600; text-decoration: none; color: var(--text); opacity: 0; transform: translateY(20px); }
+        .mobile-overlay.active a { opacity: 1; transform: translateY(0); transition: 0.6s var(--ease); }
+
+        /* Page Hero */
+        .page-hero { min-height: 50vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 120px var(--page-padding) 60px; position: relative; }
+        .hero-label { font-family: var(--font-mono); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 24px; opacity: 0; transform: translateY(20px); animation: slideUp 0.8s var(--ease) 0.2s forwards; }
+        .page-hero h1 { font-family: var(--font-display); font-size: clamp(56px, 8vw, 110px); line-height: 1.0; font-weight: 600; letter-spacing: -0.02em; }
+        .page-hero h1 span { display: block; opacity: 0; transform: translateY(40px); animation: slideUp 0.8s var(--ease) forwards; }
+        .page-hero h1 .accent-text { color: var(--accent); font-style: italic; animation-delay: 0.4s; }
+        .page-hero h1 .main-text { color: var(--text); animation-delay: 0.3s; }
+        .hero-hr { width: 100%; height: 1px; background: var(--accent); margin-top: 32px; opacity: 0; transform: scaleX(0); transform-origin: left; animation: scaleX 1s var(--ease) 0.6s forwards; }
+        .hero-subline { font-family: var(--font-serif); font-style: italic; font-size: clamp(18px, 2vw, 24px); color: var(--text-2); margin-top: 24px; opacity: 0; animation: fadeIn 0.8s ease 0.8s forwards; }
+
+        /* Intro Section */
+        .intro { display: flex; gap: 80px; padding: 100px var(--page-padding); align-items: flex-start; }
+        .intro-left { width: 45%; }
+        .intro-right { width: 55%; }
+        .photo-placeholder { aspect-ratio: 3/4; background: var(--bg-3); border: 1px solid rgba(255, 77, 0, 0.4); border-radius: 4px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .photo-placeholder span { font-family: var(--font-mono); font-size: 11px; color: var(--accent); opacity: 0.6; }
+        .intro-stats { display: flex; gap: 12px; margin-top: 24px; }
+        .stat-pill { background: var(--bg-3); border: 1px solid var(--border); padding: 8px 16px; font-family: var(--font-mono); font-size: 11px; color: var(--text-2); border-radius: 2px; }
+        .label { font-family: var(--font-mono); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 16px; display: block; }
+        .intro-right h2 { font-family: var(--font-display); font-size: clamp(28px, 3vw, 44px); border-left: 4px solid var(--accent); padding-left: 20px; margin-bottom: 32px; line-height: 1.2; }
+        .intro-right p { font-family: var(--font-body); font-size: 16px; color: var(--text-2); line-height: 1.9; margin-bottom: 24px; }
+        .view-work { font-family: var(--font-mono); font-size: 12px; color: var(--accent); text-decoration: none; transition: 0.3s; }
+        .view-work:hover { text-decoration: underline; }
+
+        /* Philosophy */
+        .philosophy { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 100px var(--page-padding); }
+        .philosophy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 60px; }
+        .philosophy-col { padding: 20px; border-left: 1px solid var(--border); }
+        .philosophy-col:first-child { border-left: none; padding-left: 0; }
+        .philosophy-num { font-family: var(--font-display); font-weight: 700; font-size: 48px; color: var(--accent); opacity: 0.4; display: block; margin-bottom: 16px; }
+        .philosophy-col h3 { font-family: var(--font-display); font-size: 22px; margin-bottom: 16px; }
+        .philosophy-col p { font-family: var(--font-body); font-size: 14px; color: var(--text-2); line-height: 1.8; }
+
+        /* Skills */
+        .skills { padding: 100px var(--page-padding); }
+        .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 40px; }
+        .skills-group h3 { font-family: var(--font-display); font-size: 20px; margin-bottom: 24px; }
+        .skill-pills { display: flex; flex-wrap: wrap; gap: 12px; }
+        .skill-pill { background: var(--bg-3); border: 1px solid var(--border); padding: 8px 18px; font-family: var(--font-mono); font-size: 11px; color: var(--text-2); border-radius: 2px; transition: 0.2s; }
+        .skill-pill:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* Experience */
+        .experience { padding: 100px var(--page-padding); }
+        .timeline-row { display: flex; justify-content: space-between; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--border); }
+        .timeline-left { display: flex; flex-direction: column; gap: 4px; }
+        .timeline-year { font-family: var(--font-mono); font-size: 11px; color: var(--accent); }
+        .timeline-role { font-family: var(--font-display); font-size: 22px; color: var(--text); }
+        .timeline-company { font-family: var(--font-body); font-size: 14px; color: var(--text-2); }
+        .timeline-desc { font-family: var(--font-body); font-size: 14px; color: var(--text-2); text-align: right; max-width: 40%; }
+
+        /* Footer */
+        .footer-cta { padding: 120px var(--page-padding); background: var(--bg-2); border-top: 1px solid var(--border); text-align: center; opacity: 0; transform: translateY(30px); transition: 0.8s var(--ease); }
+        .footer-cta.visible { opacity: 1; transform: translateY(0); }
+        .footer-cta h2 { font-family: var(--font-display); font-size: clamp(48px, 7vw, 100px); line-height: 1.1; max-width: 900px; margin: 0 auto; }
+        .footer-cta-sub { font-family: var(--font-serif); font-style: italic; font-size: 24px; color: var(--text-2); margin-top: 16px; }
+        .btn-cta { display: inline-block; background: var(--accent); color: #0A0A0A; font-family: var(--font-display); font-weight: 600; font-size: 16px; padding: 18px 48px; border-radius: 2px; text-decoration: none; margin-top: 48px; transition: 0.2s; }
+        .btn-cta:hover { background: #E04400; }
+        .footer-bar { padding: 40px var(--page-padding) 60px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--bg-2); }
+        .footer-copy { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); }
+        .footer-links, .footer-socials { display: flex; gap: 32px; }
+        .footer-links a, .footer-socials a { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); text-decoration: none; transition: 0.3s; }
+        .footer-links a:hover { color: var(--text); }
+        .footer-socials a:hover { color: var(--accent); }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes scaleX { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+        section, .page-hero, .intro, .philosophy, .skills, .experience, .footer-cta { opacity: 0; transform: translateY(30px); transition: 0.8s var(--ease); }
+        .visible { opacity: 1 !important; transform: translateY(0) !important; }
+
+        @media (max-width: 768px) {
+            :root { --page-padding: 24px; }
+            .nav-links, .btn-ghost { display: none; }
+            .hamburger { display: flex; }
+            .intro { flex-direction: column; gap: 40px; }
+            .intro-left, .intro-right { width: 100%; }
+            .philosophy-grid { grid-template-columns: 1fr; gap: 24px; }
+            .philosophy-col { border-left: none; border-bottom: 1px solid var(--border); padding-left: 0; }
+            .philosophy-col:last-child { border-bottom: none; }
+            .skills-grid { grid-template-columns: 1fr; gap: 40px; }
+            .timeline-row { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .timeline-desc { text-align: left; max-width: 100%; }
+            .footer-bar { flex-direction: column; gap: 24px; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            :root { --page-padding: 20px; }
+            .page-hero h1 { font-size: 52px; }
+            .footer-links, .footer-socials { flex-direction: column; gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="cursor"></div>
+
+    <nav id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">JE.</a>
+            <div class="nav-links">
+                <a href="work.html">Work</a>
+                <a href="about.html" style="color: var(--accent);">About</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-right">
+                <a href="contact.html" class="btn-ghost">Let's Talk →</a>
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-overlay" id="mobileOverlay">
+        <a href="work.html">Work</a>
+        <a href="about.html">About</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html" class="btn-ghost" style="margin-top: 20px; border-color: var(--accent); color: var(--accent);">Let's Talk →</a>
+    </div>
+
+    <header class="page-hero visible">
+        <div class="hero-label">ABOUT ME</div>
+        <h1>
+            <span class="main-text">About</span>
+            <span class="accent-text">Joshua.</span>
+        </h1>
+        <div class="hero-hr"></div>
+        <div class="hero-subline">Designer, creative strategist, and the person behind the work.</div>
+    </header>
+
+    <section class="intro">
+        <div class="intro-left">
+            <div class="photo-placeholder">
+                <span>[ Photo ]</span>
+            </div>
+            <div class="intro-stats">
+                <div class="stat-pill">3+ Years</div>
+                <div class="stat-pill">20+ Projects</div>
+            </div>
+        </div>
+        <div class="intro-right">
+            <span class="label">WHO I AM</span>
+            <h2>Design with purpose. Strategy with edge.</h2>
+            <p>I am Joshua Ehimare, a multi-disciplinary designer and creative strategist based in Lagos, working with clients worldwide. My work sits at the intersection of aesthetics and performance, helping brands not just look better, but work better.</p>
+            <p>I believe that great design is a strategic tool, not just a visual layer. Every pixel and every word should serve a clear purpose in the brand's larger narrative.</p>
+            <a href="work.html" class="view-work">View My Work →</a>
+        </div>
+    </section>
+
+    <section class="philosophy">
+        <span class="label">MY APPROACH</span>
+        <h2 style="font-family: var(--font-display); font-size: 32px; margin-bottom: 24px;">How I work.</h2>
+        <div class="philosophy-grid">
+            <div class="philosophy-col">
+                <span class="philosophy-num">01</span>
+                <h3>Design First</h3>
+                <p>Every decision starts with the visual experience. If it doesn't look right, nothing else matters. I obsess over the details that create a premium feel.</p>
+            </div>
+            <div class="philosophy-col">
+                <span class="philosophy-num">02</span>
+                <h3>Strategy Driven</h3>
+                <p>Design without strategy is decoration. I combine aesthetics with data to create work that performs and achieves real business goals.</p>
+            </div>
+            <div class="philosophy-col">
+                <span class="philosophy-num">03</span>
+                <h3>Results Obsessed</h3>
+                <p>Beautiful work that doesn't convert is a failed brief. I measure success by your outcomes, ensuring every project delivers tangible value.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="skills">
+        <span class="label">SKILLS & TOOLS</span>
+        <h2 style="font-family: var(--font-display); font-size: 32px; margin-bottom: 24px;">What I bring to the table.</h2>
+        <div class="skills-grid">
+            <div class="skills-group">
+                <h3>Design</h3>
+                <div class="skill-pills">
+                    <div class="skill-pill">Brand Identity</div>
+                    <div class="skill-pill">UI·UX Design</div>
+                    <div class="skill-pill">Typography</div>
+                    <div class="skill-pill">Motion Graphics</div>
+                    <div class="skill-pill">Print Design</div>
+                </div>
+            </div>
+            <div class="skills-group">
+                <h3>Strategy & Web</h3>
+                <div class="skill-pills">
+                    <div class="skill-pill">SEO Strategy</div>
+                    <div class="skill-pill">Web Design</div>
+                    <div class="skill-pill">Conversion Optimisation</div>
+                    <div class="skill-pill">Content Strategy</div>
+                    <div class="skill-pill">Digital Marketing</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="experience">
+        <span class="label">EXPERIENCE</span>
+        <h2 style="font-family: var(--font-display); font-size: 32px; margin-bottom: 24px;">Where I've been.</h2>
+        
+        <div class="timeline-row">
+            <div class="timeline-left">
+                <span class="timeline-year">2022–Present</span>
+                <span class="timeline-role">Lead Designer</span>
+                <span class="timeline-company">Freelance</span>
+            </div>
+            <p class="timeline-desc">Brand, web and SEO for startups and SMEs globally.</p>
+        </div>
+
+        <div class="timeline-row">
+            <div class="timeline-left">
+                <span class="timeline-year">2021–2022</span>
+                <span class="timeline-role">UI Designer</span>
+                <span class="timeline-company">Digital Agency Lagos</span>
+            </div>
+            <p class="timeline-desc">Interface design for fintech and e-commerce clients.</p>
+        </div>
+
+        <div class="timeline-row">
+            <div class="timeline-left">
+                <span class="timeline-year">2020–2021</span>
+                <span class="timeline-role">Junior Designer</span>
+                <span class="timeline-company">Creative Studio</span>
+            </div>
+            <p class="timeline-desc">Brand identity and print design for local businesses.</p>
+        </div>
+
+        <div class="timeline-row">
+            <div class="timeline-left">
+                <span class="timeline-year">2019–2020</span>
+                <span class="timeline-role">Design Intern</span>
+                <span class="timeline-company">Marketing Agency</span>
+            </div>
+            <p class="timeline-desc">Supported senior designers on brand campaigns.</p>
+        </div>
+    </section>
+
+    <section class="footer-cta">
+        <span class="label" style="color: var(--text-2)">READY WHEN YOU ARE</span>
+        <h2>Let's build something remarkable.</h2>
+        <p class="footer-cta-sub">Available for freelance projects and full-time roles.</p>
+        <a href="contact.html" class="btn-cta">Start a Project →</a>
+    </section>
+
+    <footer class="footer-bar">
+        <div class="footer-copy">© 2024 Joshua Ehimare. All rights reserved.</div>
+        <div class="footer-links">
+            <a href="work.html">Work</a>
+            <a href="about.html">About</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-socials">
+            <a href="#">LinkedIn</a>
+            <a href="#">Twitter</a>
+            <a href="#">Instagram</a>
+            <a href="#">Dribbble</a>
+        </div>
+    </footer>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+
+        // Navigation Scroll Behavior
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileOverlay.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Intersection Observer for Animations
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section, .page-hero, .intro, .philosophy, .skills, .experience, .footer-cta').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

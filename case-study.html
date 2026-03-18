@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibrant Brand Identity — Joshua Ehimare</title>
+    <meta name="description" content="A detailed case study of the Vibrant Brand Identity project by Joshua Ehimare.">
+    
+    <!-- Fonts -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0A0A0A;
+            --bg-2: #111111;
+            --bg-3: #181818;
+            --accent: #FF4D00;
+            --text: #F0EBE3;
+            --text-2: #6B6560;
+            --text-3: #3A3530;
+            --border: #1E1E1E;
+            --page-padding: 6vw;
+            --font-display: 'Clash Display', sans-serif;
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        html { scroll-behavior: smooth; background-color: var(--bg); }
+        body { background-color: var(--bg); color: var(--text); font-family: var(--font-body); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+        /* Custom Cursor */
+        #cursor { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transition: transform 0.15s ease; transform: translate(-50%, -50%); }
+        .cursor-hover #cursor { transform: translate(-50%, -50%) scale(2.5); mix-blend-mode: difference; }
+
+        /* Navigation */
+        nav { position: fixed; top: 0; left: 0; width: 100%; height: 72px; display: flex; align-items: center; z-index: 1000; transition: background 0.4s ease, backdrop-filter 0.4s ease; padding: 0 var(--page-padding); opacity: 0; animation: fadeIn 0.6s ease 0.1s forwards; }
+        nav.scrolled { background: rgba(10, 10, 10, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        .nav-inner { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { font-family: var(--font-display); font-weight: 700; font-size: 22px; color: var(--accent); text-decoration: none; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-2); text-decoration: none; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-right { display: flex; align-items: center; gap: 24px; }
+        .btn-ghost { border: 1px solid var(--border); color: var(--text-2); padding: 10px 22px; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; text-decoration: none; transition: all 0.3s; }
+        .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* Mobile Nav */
+        .hamburger { display: none; flex-direction: column; gap: 6px; background: none; border: none; z-index: 1100; }
+        .hamburger span { width: 24px; height: 2px; background: var(--text); transition: 0.3s; }
+        .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        .mobile-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px; z-index: 1050; opacity: 0; pointer-events: none; transform: translateY(-20px); transition: 0.4s var(--ease); }
+        .mobile-overlay.active { opacity: 1; pointer-events: all; transform: translateY(0); }
+        .mobile-overlay a { font-family: var(--font-display); font-size: 52px; font-weight: 600; text-decoration: none; color: var(--text); opacity: 0; transform: translateY(20px); }
+        .mobile-overlay.active a { opacity: 1; transform: translateY(0); transition: 0.6s var(--ease); }
+
+        /* Back Link */
+        .back-link { display: inline-block; font-family: var(--font-mono); font-size: 11px; color: var(--accent); text-decoration: none; text-transform: uppercase; letter-spacing: 0.1em; padding: 100px var(--page-padding) 40px; transition: opacity 0.3s; }
+        .back-link:hover { opacity: 0.7; }
+
+        /* Project Hero */
+        .project-hero { padding: 0 var(--page-padding); }
+        .hero-visual { aspect-ratio: 16/9; background: var(--bg-3); border: 1px solid var(--border); border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .hero-visual span { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); }
+        .hero-content { padding: 40px 0; }
+        .hero-content h1 { font-family: var(--font-display); font-size: clamp(48px, 7vw, 96px); color: var(--text); line-height: 1.1; }
+        .hero-meta { display: flex; gap: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--text-2); text-transform: uppercase; margin-top: 16px; }
+        .hero-meta span { color: var(--accent); }
+
+        /* Overview */
+        .overview { display: flex; gap: 80px; padding: 100px var(--page-padding); }
+        .overview-left { width: 55%; }
+        .overview-right { width: 45%; }
+        .label { font-family: var(--font-mono); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 16px; display: block; }
+        .overview-left h2 { font-family: var(--font-display); font-size: 32px; margin-bottom: 24px; }
+        .overview-left p { font-family: var(--font-body); font-size: 16px; color: var(--text-2); line-height: 1.9; margin-bottom: 24px; }
+        .overview-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: 4px; padding: 32px; }
+        .overview-stat { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--border); }
+        .overview-stat:last-child { border-bottom: none; }
+        .stat-label { font-family: var(--font-mono); font-size: 11px; color: var(--accent); text-transform: uppercase; }
+        .stat-value { font-family: var(--font-body); font-size: 16px; color: var(--text); }
+
+        /* Watermark Sections */
+        .watermark-section { position: relative; padding: 100px var(--page-padding); overflow: hidden; }
+        .watermark { position: absolute; top: 0; left: var(--page-padding); font-family: var(--font-display); font-weight: 700; font-size: 180px; color: var(--text); opacity: 0.04; z-index: 0; line-height: 1; pointer-events: none; }
+        .section-content { position: relative; z-index: 1; }
+        .section-content h2 { font-family: var(--font-display); font-size: clamp(36px, 4vw, 60px); margin-bottom: 24px; }
+        .section-content p { font-family: var(--font-body); font-size: 16px; color: var(--text-2); line-height: 1.9; max-width: 800px; }
+
+        /* Process Rows */
+        .process-row { display: flex; gap: 60px; margin-bottom: 80px; align-items: center; }
+        .process-row:nth-child(even) { flex-direction: row-reverse; }
+        .process-visual { width: 50%; aspect-ratio: 4/3; background: var(--bg-3); border: 1px solid var(--border); border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+        .process-visual span { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); }
+        .process-text { width: 50%; }
+        .step-num { font-family: var(--font-mono); font-size: 11px; color: var(--accent); margin-bottom: 12px; display: block; }
+        .process-text h3 { font-family: var(--font-display); font-size: 28px; margin-bottom: 16px; }
+
+        /* Solution Grid */
+        .solution-main { aspect-ratio: 16/9; background: var(--bg-3); border: 1px solid var(--border); border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+        .solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .solution-item { aspect-ratio: 4/3; background: var(--bg-3); border: 1px solid var(--border); border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+        .solution-main span, .solution-item span { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); }
+
+        /* Results */
+        .results { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 100px var(--page-padding); text-align: center; }
+        .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 60px; }
+        .result-item { padding: 40px; border-left: 1px solid var(--border); }
+        .result-item:first-child { border-left: none; }
+        .result-num { font-family: var(--font-display); font-weight: 700; font-size: clamp(48px, 6vw, 80px); color: var(--accent); display: block; }
+        .result-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); text-transform: uppercase; margin-top: 8px; display: block; }
+
+        /* Next Project */
+        .next-project { display: flex; justify-content: space-between; align-items: center; padding: 60px var(--page-padding); background: var(--bg-2); border-top: 1px solid var(--border); text-decoration: none; transition: background 0.3s; }
+        .next-project:hover { background: var(--bg-3); }
+        .next-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); display: block; margin-bottom: 8px; }
+        .next-title { font-family: var(--font-display); font-size: clamp(28px, 3vw, 48px); color: var(--text); }
+        .next-arrow { font-size: 48px; color: var(--accent); }
+
+        /* Footer */
+        .footer-cta { padding: 120px var(--page-padding); background: var(--bg-2); border-top: 1px solid var(--border); text-align: center; opacity: 0; transform: translateY(30px); transition: 0.8s var(--ease); }
+        .footer-cta.visible { opacity: 1; transform: translateY(0); }
+        .footer-cta h2 { font-family: var(--font-display); font-size: clamp(48px, 7vw, 100px); line-height: 1.1; max-width: 900px; margin: 0 auto; }
+        .footer-cta-sub { font-family: var(--font-serif); font-style: italic; font-size: 24px; color: var(--text-2); margin-top: 16px; }
+        .btn-cta { display: inline-block; background: var(--accent); color: #0A0A0A; font-family: var(--font-display); font-weight: 600; font-size: 16px; padding: 18px 48px; border-radius: 2px; text-decoration: none; margin-top: 48px; transition: 0.2s; }
+        .btn-cta:hover { background: #E04400; }
+        .footer-bar { padding: 40px var(--page-padding) 60px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--bg-2); }
+        .footer-copy { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); }
+        .footer-links, .footer-socials { display: flex; gap: 32px; }
+        .footer-links a, .footer-socials a { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); text-decoration: none; transition: 0.3s; }
+        .footer-links a:hover { color: var(--text); }
+        .footer-socials a:hover { color: var(--accent); }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        section, .watermark-section, .project-hero, .overview, .results, .next-project, .footer-cta { opacity: 0; transform: translateY(30px); transition: 0.8s var(--ease); }
+        .visible { opacity: 1 !important; transform: translateY(0) !important; }
+
+        @media (max-width: 768px) {
+            :root { --page-padding: 24px; }
+            .nav-links, .btn-ghost { display: none; }
+            .hamburger { display: flex; }
+            .overview { flex-direction: column; gap: 40px; }
+            .overview-left, .overview-right { width: 100%; }
+            .process-row { flex-direction: column !important; gap: 32px; }
+            .process-visual, .process-text { width: 100%; }
+            .results-grid { grid-template-columns: 1fr; }
+            .result-item { border-left: none; border-bottom: 1px solid var(--border); }
+            .result-item:last-child { border-bottom: none; }
+            .footer-bar { flex-direction: column; gap: 24px; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            :root { --page-padding: 20px; }
+            .hero-content h1 { font-size: 42px; }
+            .footer-links, .footer-socials { flex-direction: column; gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="cursor"></div>
+
+    <nav id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">JE.</a>
+            <div class="nav-links">
+                <a href="work.html">Work</a>
+                <a href="about.html">About</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-right">
+                <a href="contact.html" class="btn-ghost">Let's Talk →</a>
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-overlay" id="mobileOverlay">
+        <a href="work.html">Work</a>
+        <a href="about.html">About</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html" class="btn-ghost" style="margin-top: 20px; border-color: var(--accent); color: var(--accent);">Let's Talk →</a>
+    </div>
+
+    <a href="work.html" class="back-link">← Back to Work</a>
+
+    <header class="project-hero visible">
+        <div class="hero-visual">
+            <span>[ Project Image ]</span>
+        </div>
+        <div class="hero-content">
+            <h1>Vibrant Brand Identity</h1>
+            <div class="hero-meta">
+                CLIENT: [Client Name] <span> / </span> CATEGORY: Brand Identity <span> / </span> YEAR: 2024
+            </div>
+        </div>
+    </header>
+
+    <section class="overview">
+        <div class="overview-left">
+            <span class="label">OVERVIEW</span>
+            <h2>Project Overview</h2>
+            <p>Vibrant is a modern tech startup focused on bringing color and energy to the digital workspace. The goal was to create a visual identity that felt professional yet approachable, breaking away from the typical "corporate blue" aesthetic.</p>
+            <p>We developed a comprehensive brand system including logo design, typography, color palette, and digital guidelines. The result is a bold, high-contrast identity that stands out in a crowded market.</p>
+            <p>The project involved deep strategy sessions to define the brand's core values and target audience, ensuring every visual element served a specific purpose.</p>
+        </div>
+        <div class="overview-right">
+            <div class="overview-card">
+                <div class="overview-stat">
+                    <span class="stat-label">ROLE</span>
+                    <span class="stat-value">Lead Designer</span>
+                </div>
+                <div class="overview-stat">
+                    <span class="stat-label">TIMELINE</span>
+                    <span class="stat-value">8 Weeks</span>
+                </div>
+                <div class="overview-stat">
+                    <span class="stat-label">TOOLS</span>
+                    <span class="stat-value">Figma, Illustrator</span>
+                </div>
+                <div class="overview-stat">
+                    <span class="stat-label">DELIVERABLES</span>
+                    <span class="stat-value">Brand System, UI Kit</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="watermark-section">
+        <div class="watermark">01</div>
+        <div class="section-content">
+            <span class="label">THE CHALLENGE</span>
+            <h2>Breaking the mold.</h2>
+            <p>The primary challenge was balancing the "vibrant" energy with the needs of a B2B audience. We needed to ensure the brand felt exciting without losing credibility. The existing brand was static and lacked a clear voice, making it difficult for the sales team to communicate value effectively.</p>
+            <p>We had to rethink the entire visual language from the ground up, creating a system that was flexible enough to work across various platforms while maintaining a consistent core.</p>
+        </div>
+    </section>
+
+    <section class="watermark-section">
+        <div class="watermark">02</div>
+        <div class="section-content">
+            <span class="label">THE PROCESS</span>
+            <h2>Strategic execution.</h2>
+            
+            <div class="process-row">
+                <div class="process-visual"><span>[ Process Image ]</span></div>
+                <div class="process-text">
+                    <span class="step-num">01</span>
+                    <h3>Discovery & Strategy</h3>
+                    <p>We started with intensive workshops to uncover the brand's unique DNA. This phase was about listening and defining the strategic foundation for the visual work.</p>
+                </div>
+            </div>
+
+            <div class="process-row">
+                <div class="process-visual"><span>[ Process Image ]</span></div>
+                <div class="process-text">
+                    <span class="step-num">02</span>
+                    <h3>Visual Exploration</h3>
+                    <p>Iterative design cycles where we explored different directions for the logo and color system. We focused on high-energy palettes and bold typography.</p>
+                </div>
+            </div>
+
+            <div class="process-row">
+                <div class="process-visual"><span>[ Process Image ]</span></div>
+                <div class="process-text">
+                    <span class="step-num">03</span>
+                    <h3>System Development</h3>
+                    <p>Refining the chosen direction into a complete brand system. This included building out the UI components and digital guidelines for the internal team.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="watermark-section">
+        <div class="watermark">03</div>
+        <div class="section-content">
+            <span class="label">THE SOLUTION</span>
+            <h2>A bold new world.</h2>
+            <div class="solution-main"><span>[ Solution Image ]</span></div>
+            <div class="solution-grid">
+                <div class="solution-item"><span>[ Grid Image ]</span></div>
+                <div class="solution-item"><span>[ Grid Image ]</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="results">
+        <span class="label">RESULTS</span>
+        <h2>Impact by the numbers.</h2>
+        <div class="results-grid">
+            <div class="result-item">
+                <span class="result-num">340%</span>
+                <span class="result-label">Increase in Traffic</span>
+            </div>
+            <div class="result-item">
+                <span class="result-num">4.2x</span>
+                <span class="result-label">ROI</span>
+            </div>
+            <div class="result-item">
+                <span class="result-num">#1</span>
+                <span class="result-label">Google Ranking</span>
+            </div>
+        </div>
+    </section>
+
+    <a href="case-study.html" class="next-project">
+        <div>
+            <span class="next-label">NEXT PROJECT</span>
+            <h2 class="next-title">Nexus Digital Experience</h2>
+        </div>
+        <span class="next-arrow">→</span>
+    </a>
+
+    <section class="footer-cta">
+        <span class="label" style="color: var(--text-2)">READY WHEN YOU ARE</span>
+        <h2>Let's build something remarkable.</h2>
+        <p class="footer-cta-sub">Available for freelance projects and full-time roles.</p>
+        <a href="contact.html" class="btn-cta">Start a Project →</a>
+    </section>
+
+    <footer class="footer-bar">
+        <div class="footer-copy">© 2024 Joshua Ehimare. All rights reserved.</div>
+        <div class="footer-links">
+            <a href="work.html">Work</a>
+            <a href="about.html">About</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-socials">
+            <a href="#">LinkedIn</a>
+            <a href="#">Twitter</a>
+            <a href="#">Instagram</a>
+            <a href="#">Dribbble</a>
+        </div>
+    </footer>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+
+        // Navigation Scroll Behavior
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileOverlay.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Intersection Observer for Animations
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section, .watermark-section, .project-hero, .overview, .results, .next-project, .footer-cta').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

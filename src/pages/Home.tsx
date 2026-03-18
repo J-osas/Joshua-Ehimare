@@ -1,160 +1,242 @@
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { projects, blogPosts } from '../data/content';
-import { ProjectCard } from '../components/ProjectCard';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-
-const services = ["Web Design", "Brand Identity", "SEO Strategy", "Digital Marketing"];
+import { useEffect, useRef } from 'react';
 
 export function Home() {
-  const [serviceIndex, setServiceIndex] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setServiceIndex((prev) => (prev + 1) % services.length);
-    }, 2000);
-    return () => clearInterval(timer);
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          (entry.target as HTMLElement).style.opacity = '1';
+          (entry.target as HTMLElement).style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    animatedElements.forEach(el => observer.observe(el));
+
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <div className="px-6 md:px-12">
+    <div className="w-full overflow-x-hidden">
       {/* Hero Section */}
-      <section className="min-h-[100vh] flex flex-col justify-center max-w-7xl mx-auto py-20 relative overflow-hidden">
-        <motion.h1
-          initial={{ y: 50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="text-7xl md:text-[13vw] lg:text-[10vw] font-display font-bold leading-[0.85] mb-12 tracking-tighter sm:text-[11vw]"
-        >
-          DESIGN THAT <br />
-          <span className="text-accent italic">DEMANDS</span> <br />
-          ATTENTION.
-        </motion.h1>
-        <div className="h-px w-full bg-accent mb-12" />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-end">
-          <div className="space-y-8">
-            <p className="text-xl md:text-2xl text-secondary-text max-w-xl leading-relaxed">
-              I'm Joshua — a creative designer helping brands stand out, rank higher, and convert better.
-            </p>
-            <div className="h-8 overflow-hidden">
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={services[serviceIndex]}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="text-accent font-mono text-xl uppercase tracking-widest"
-                >
-                  {services[serviceIndex]}
-                </motion.p>
-              </AnimatePresence>
+      <section className="min-h-screen flex flex-col justify-center px-[var(--page-padding)] relative py-20">
+        <div className="max-w-[1400px] mx-auto w-full">
+          <div className="font-mono text-[11px] text-secondary-text tracking-[0.2em] mb-8 animate-fade-in opacity-0 [animation-fill-mode:forwards] [animation-delay:0.1s]">
+            DESIGNER & CREATIVE STRATEGIST — LAGOS / WORLDWIDE
+          </div>
+          
+          <h1 className="font-display text-[clamp(48px,10vw,160px)] leading-[0.9] font-bold tracking-[-0.04em] mb-12">
+            <motion.span 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="block"
+            >
+              Crafting bold
+            </motion.span>
+            <motion.span 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="block"
+            >
+              digital identities
+            </motion.span>
+            <motion.span 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="block text-accent"
+            >
+              that convert.
+            </motion.span>
+          </h1>
+
+          <div className="w-full h-px bg-border mb-12" />
+
+          <div className="flex flex-col md:flex-row justify-between items-end gap-12">
+            <div className="max-w-[500px] font-serif italic text-[24px] md:text-[28px] leading-[1.3] text-secondary-text">
+              I'm Joshua — a creative designer who combines brand strategy, SEO, and web design to help businesses stand out and scale.
+            </div>
+            <div className="flex flex-col items-end gap-4">
+              <span className="font-mono text-[11px] text-accent tracking-[0.2em] animate-bounce">
+                Scroll to explore ↓
+              </span>
+              <span className="font-mono text-[11px] text-text-3 tracking-[0.2em]">
+                20+ PROJECTS DELIVERED
+              </span>
             </div>
           </div>
-          <div className="hidden md:flex justify-end absolute bottom-20 right-0">
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-              className="text-accent font-mono text-sm uppercase tracking-widest vertical-text"
-              style={{ writingMode: 'vertical-rl' }}
-            >
-              Scroll to explore ↓
-            </motion.div>
-          </div>
+        </div>
+
+        <div className="absolute right-[var(--page-padding)] top-1/2 -translate-y-1/2 vertical-text font-mono text-[11px] text-text-3 tracking-[0.3em] hidden lg:block">
+          joshuaehimare.com
         </div>
       </section>
+
+      {/* Marquee */}
+      <div className="py-10 border-y border-border overflow-hidden bg-surface">
+        <div className="flex whitespace-nowrap animate-marquee">
+          {[1, 2].map((i) => (
+            <div key={i} className="flex items-center gap-10 pr-10">
+              <span className="font-display text-[40px] md:text-[60px] font-bold uppercase">Web Design</span>
+              <span className="text-accent text-4xl">✦</span>
+              <span className="font-display text-[40px] md:text-[60px] font-bold uppercase">Brand Identity</span>
+              <span className="text-accent text-4xl">✦</span>
+              <span className="font-display text-[40px] md:text-[60px] font-bold uppercase">SEO Strategy</span>
+              <span className="text-accent text-4xl">✦</span>
+              <span className="font-display text-[40px] md:text-[60px] font-bold uppercase">Digital Marketing</span>
+              <span className="text-accent text-4xl">✦</span>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Selected Work */}
-      <section id="work" className="pt-32 pb-10 max-w-7xl mx-auto scroll-mt-20">
+      <section className="py-[120px] px-[var(--page-padding)] max-w-[1400px] mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 gap-8">
-          <h2 className="text-5xl md:text-7xl font-display font-bold">
-            Selected <span className="text-accent">Work</span>
-          </h2>
-          <Link to="/work" className="text-accent font-mono uppercase tracking-widest hover:underline underline-offset-8 min-h-[44px] flex items-center">
-            View All Projects →
-          </Link>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
-          {projects.slice(0, 4).map((project, index) => (
-            <div key={project.id} className={index % 2 === 1 ? 'md:mt-32' : ''}>
-              <ProjectCard project={project} />
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* About Teaser */}
-      <section id="about" className="py-10 bg-surface -mx-6 md:-mx-12 px-6 md:px-12 scroll-mt-20">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
-          <div className="border-l-[4px] border-accent pl-8 md:pl-12 py-8 md:py-12">
-            <span className="block text-accent font-mono text-[80px] md:text-[120px] font-bold leading-none mb-8">01</span>
-            <h3 className="text-4xl md:text-5xl font-display font-bold leading-tight">
-              Strategic thinking <br /> meets bold design.
-            </h3>
-          </div>
           <div>
-            <p className="text-xl text-secondary-text mb-8 leading-relaxed">
-              I don't just make things look pretty. I combine design craft with strategic thinking — brand, SEO, and web, all working together to make your business impossible to ignore.
-            </p>
-            <a href="#contact" className="text-accent font-mono uppercase tracking-widest hover:underline underline-offset-8 min-h-[44px] flex items-center">
-              More about me →
-            </a>
+            <span className="font-mono text-[11px] text-accent tracking-[0.2em] mb-4 block">SELECTED WORK</span>
+            <h2 className="font-display text-[clamp(40px,6vw,80px)] font-bold leading-none">Recent Projects</h2>
           </div>
-        </div>
-      </section>
-
-      {/* Services Strip */}
-      <section className="py-20 overflow-hidden border-y border-border">
-        <div className="flex whitespace-nowrap gap-10 md:gap-20 animate-marquee w-max">
-          {[1, 2].map((i) => (
-            <div key={i} className="flex gap-10 md:gap-20 items-center">
-              <span className="text-3xl md:text-6xl font-display font-bold uppercase">Web Design</span>
-              <span className="text-accent text-3xl md:text-6xl font-display font-bold">•</span>
-              <span className="text-3xl md:text-6xl font-display font-bold uppercase">Brand Identity</span>
-              <span className="text-accent text-3xl md:text-6xl font-display font-bold">•</span>
-              <span className="text-3xl md:text-6xl font-display font-bold uppercase">SEO Strategy</span>
-              <span className="text-accent text-3xl md:text-6xl font-display font-bold">•</span>
-              <span className="text-3xl md:text-6xl font-display font-bold uppercase">Digital Marketing</span>
-              <span className="text-accent text-3xl md:text-6xl font-display font-bold">•</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Blog Teaser */}
-      <section id="blog" className="py-32 max-w-7xl mx-auto scroll-mt-20">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 gap-8">
-          <h2 className="text-5xl md:text-7xl font-display font-bold">
-            Latest <span className="text-accent">Insights</span>
-          </h2>
-          <Link to="/blog" className="text-accent font-mono uppercase tracking-widest hover:underline underline-offset-8 min-h-[44px] flex items-center">
-            Read Blog →
+          <Link to="/work" className="font-mono text-[11px] text-secondary-text uppercase tracking-[0.15em] no-underline hover:text-accent transition-colors">
+            View all work →
           </Link>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {blogPosts.slice(0, 2).map((post) => (
-            <Link key={post.id} to={`/blog/${post.slug}`} className="group">
-              <div className="p-8 md:p-10 bg-surface border border-border group-hover:border-accent transition-colors">
-                <span className="text-xs font-mono text-secondary-text uppercase tracking-widest mb-4 block">
-                  {post.date} — {post.readingTime}
-                </span>
-                <h3 className="text-2xl md:text-3xl font-display font-bold mb-4 group-hover:text-accent transition-colors">
-                  {post.title}
+
+        <div className="flex flex-col border-t border-border">
+          {projects.slice(0, 3).map((project, index) => (
+            <Link 
+              key={project.id} 
+              to={`/case-study/${project.id}`} 
+              className="group flex flex-col md:flex-row justify-between items-center py-12 border-b border-border no-underline transition-all duration-500 hover:bg-surface/50 px-4"
+            >
+              <div className="flex items-center gap-8 md:gap-16 w-full md:w-auto">
+                <span className="font-mono text-[14px] text-text-3">0{index + 1}</span>
+                <h3 className="font-display text-[clamp(28px,4vw,52px)] font-semibold transition-transform duration-500 group-hover:translate-x-4">
+                  {project.title} <span className="text-accent opacity-0 group-hover:opacity-100 transition-opacity ml-4">→</span>
                 </h3>
-                <p className="text-secondary-text mb-6 line-clamp-2">
-                  {post.excerpt}
-                </p>
-                <span className="text-accent font-mono text-sm uppercase tracking-widest min-h-[44px] flex items-center">
-                  Read More →
-                </span>
+              </div>
+              <div className="flex items-center gap-12 mt-8 md:mt-0 w-full md:w-auto justify-between md:justify-end">
+                <span className="font-mono text-[11px] text-secondary-text uppercase tracking-[0.2em]">{project.category}</span>
+                <div className="w-[120px] h-[80px] md:w-[200px] md:h-[120px] bg-bg-3 overflow-hidden rounded-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 hidden sm:block">
+                  <img 
+                    src={project.image} 
+                    alt={project.title} 
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
               </div>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* Contact Section Placeholder */}
-      <section id="contact" className="scroll-mt-20" />
+      {/* About Teaser */}
+      <section className="py-[120px] px-[var(--page-padding)] bg-surface flex flex-col lg:flex-row gap-20 items-center">
+        <div className="w-full lg:w-1/2 relative">
+          <div className="aspect-[4/5] bg-bg-3 rounded-[2px] overflow-hidden">
+            <img 
+              src="https://picsum.photos/seed/joshua/800/1000" 
+              alt="Joshua Ehimare" 
+              className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+              referrerPolicy="no-referrer"
+            />
+          </div>
+          <div className="absolute -bottom-10 -right-10 hidden md:flex gap-4">
+            <div className="bg-accent text-background p-6 rounded-[2px] font-display font-bold text-center">
+              <span className="block text-4xl">3+</span>
+              <span className="text-[10px] uppercase tracking-widest">Years Exp.</span>
+            </div>
+            <div className="bg-foreground text-background p-6 rounded-[2px] font-display font-bold text-center">
+              <span className="block text-4xl">20+</span>
+              <span className="text-[10px] uppercase tracking-widest">Projects</span>
+            </div>
+          </div>
+        </div>
+        <div className="w-full lg:w-1/2">
+          <span className="font-mono text-[11px] text-accent tracking-[0.2em] mb-4 block">ABOUT ME</span>
+          <h2 className="font-display text-[clamp(36px,5vw,64px)] font-bold leading-[1.1] mb-8">
+            Design craft meets strategic thinking.
+          </h2>
+          <div className="space-y-6 text-secondary-text text-lg md:text-xl leading-relaxed">
+            <p>I'm Joshua Ehimare — a designer and creative strategist based in Lagos. I help brands build identities that are impossible to ignore, websites that convert, and digital strategies that grow.</p>
+            <p>My work sits at the intersection of aesthetics and performance — because great design should be beautiful AND effective.</p>
+            <Link to="/about" className="inline-block font-mono text-[11px] text-accent uppercase tracking-[0.2em] no-underline border-b border-accent pb-2 mt-4 hover:text-foreground hover:border-foreground transition-all">
+              More about me →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Philosophy */}
+      <section className="py-[120px] px-[var(--page-padding)] text-center border-y border-border">
+        <h2 className="font-serif italic text-[clamp(32px,5vw,72px)] leading-[1.2] max-w-[1000px] mx-auto mb-20">
+          "Work that doesn't just look good — it performs."
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-[1200px] mx-auto">
+          {[
+            { num: '20', label: 'Projects Completed' },
+            { num: '3', label: 'Years Experience' },
+            { num: '100', label: 'Client Satisfaction' },
+            { num: '15', label: 'Brands Built' }
+          ].map((stat, i) => (
+            <div key={i} className="flex flex-col items-center">
+              <span className="font-display text-[clamp(40px,5vw,80px)] font-bold text-accent mb-2">{stat.num}</span>
+              <span className="font-mono text-[10px] text-text-3 uppercase tracking-widest">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Insights */}
+      <section className="py-[120px] px-[var(--page-padding)] max-w-[1400px] mx-auto">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 gap-8">
+          <div>
+            <span className="font-mono text-[11px] text-accent tracking-[0.2em] mb-4 block">FROM THE BLOG</span>
+            <h2 className="font-display text-[clamp(40px,6vw,80px)] font-bold leading-none">Latest Insights</h2>
+          </div>
+          <Link to="/blog" className="font-mono text-[11px] text-secondary-text uppercase tracking-[0.15em] no-underline hover:text-accent transition-colors">
+            Read all articles →
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {blogPosts.slice(0, 2).map((post) => (
+            <Link 
+              key={post.id} 
+              to={`/blog/${post.slug}`} 
+              className="group p-8 md:p-12 bg-surface border border-border rounded-[2px] no-underline transition-all duration-500 hover:border-accent"
+            >
+              <span className="inline-block bg-accent/10 text-accent font-mono text-[10px] px-3 py-1 rounded-full mb-6 uppercase tracking-widest">
+                {post.category}
+              </span>
+              <h3 className="font-display text-3xl md:text-4xl font-bold mb-6 group-hover:text-accent transition-colors">
+                {post.title}
+              </h3>
+              <p className="text-secondary-text text-lg mb-8 line-clamp-2">
+                {post.excerpt}
+              </p>
+              <div className="flex justify-between items-center pt-8 border-t border-border">
+                <span className="font-mono text-[11px] text-text-3 uppercase tracking-widest">{post.date}</span>
+                <span className="font-mono text-[11px] text-accent uppercase tracking-widest group-hover:translate-x-2 transition-transform">Read →</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work & Projects — Joshua Ehimare</title>
+    <meta name="description" content="A selection of brand, web, and strategy projects by Joshua Ehimare.">
+    
+    <!-- Fonts -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0A0A0A;
+            --bg-2: #111111;
+            --bg-3: #181818;
+            --accent: #FF4D00;
+            --text: #F0EBE3;
+            --text-2: #6B6560;
+            --text-3: #3A3530;
+            --border: #1E1E1E;
+            --page-padding: 6vw;
+            --font-display: 'Clash Display', sans-serif;
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        html { scroll-behavior: smooth; background-color: var(--bg); }
+        body { background-color: var(--bg); color: var(--text); font-family: var(--font-body); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+        /* Custom Cursor */
+        #cursor { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transition: transform 0.15s ease; transform: translate(-50%, -50%); }
+        .cursor-hover #cursor { transform: translate(-50%, -50%) scale(2.5); mix-blend-mode: difference; }
+
+        /* Navigation */
+        nav { position: fixed; top: 0; left: 0; width: 100%; height: 72px; display: flex; align-items: center; z-index: 1000; transition: background 0.4s ease, backdrop-filter 0.4s ease; padding: 0 var(--page-padding); opacity: 0; animation: fadeIn 0.6s ease 0.1s forwards; }
+        nav.scrolled { background: rgba(10, 10, 10, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        .nav-inner { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { font-family: var(--font-display); font-weight: 700; font-size: 22px; color: var(--accent); text-decoration: none; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-2); text-decoration: none; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-right { display: flex; align-items: center; gap: 24px; }
+        .availability { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--text-2); }
+        .dot { width: 6px; height: 6px; background: #00FF00; border-radius: 50%; box-shadow: 0 0 8px #00FF00; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+        .btn-ghost { border: 1px solid var(--border); color: var(--text-2); padding: 10px 22px; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; text-decoration: none; transition: all 0.3s; }
+        .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* Mobile Nav */
+        .hamburger { display: none; flex-direction: column; gap: 6px; background: none; border: none; z-index: 1100; }
+        .hamburger span { width: 24px; height: 2px; background: var(--text); transition: 0.3s; }
+        .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        .mobile-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px; z-index: 1050; opacity: 0; pointer-events: none; transform: translateY(-20px); transition: 0.4s var(--ease); }
+        .mobile-overlay.active { opacity: 1; pointer-events: all; transform: translateY(0); }
+        .mobile-overlay a { font-family: var(--font-display); font-size: 52px; font-weight: 600; text-decoration: none; color: var(--text); opacity: 0; transform: translateY(20px); }
+        .mobile-overlay.active a { opacity: 1; transform: translateY(0); transition: 0.6s var(--ease); }
+
+        /* Page Hero */
+        .page-hero { min-height: 50vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 120px var(--page-padding) 60px; position: relative; }
+        .hero-label { font-family: var(--font-mono); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 24px; opacity: 0; transform: translateY(20px); animation: slideUp 0.8s var(--ease) 0.2s forwards; }
+        .page-hero h1 { font-family: var(--font-display); font-size: clamp(56px, 8vw, 110px); line-height: 1.0; font-weight: 600; letter-spacing: -0.02em; }
+        .page-hero h1 span { display: block; opacity: 0; transform: translateY(40px); animation: slideUp 0.8s var(--ease) forwards; }
+        .page-hero h1 .accent-text { color: var(--accent); font-style: italic; animation-delay: 0.4s; }
+        .page-hero h1 .main-text { color: var(--text); animation-delay: 0.3s; }
+        .hero-hr { width: 100%; height: 1px; background: var(--accent); margin-top: 32px; opacity: 0; transform: scaleX(0); transform-origin: left; animation: scaleX 1s var(--ease) 0.6s forwards; }
+        .hero-meta { display: flex; justify-content: space-between; align-items: baseline; margin-top: 24px; opacity: 0; animation: fadeIn 0.8s ease 0.8s forwards; }
+        .hero-meta-left { font-family: var(--font-serif); font-style: italic; font-size: clamp(18px, 2vw, 24px); color: var(--text-2); max-width: 500px; }
+        .hero-meta-right { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); text-transform: uppercase; }
+
+        /* Filter Bar */
+        .filter-bar { position: sticky; top: 72px; width: 100%; height: 52px; background: var(--bg-2); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 32px; padding: 0 var(--page-padding); z-index: 900; overflow-x: auto; scrollbar-width: none; }
+        .filter-bar::-webkit-scrollbar { display: none; }
+        .filter-btn { background: none; border: none; font-family: var(--font-mono); font-size: 11px; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.1em; padding: 18px 0; cursor: pointer; transition: 0.3s; border-bottom: 2px solid transparent; white-space: nowrap; }
+        .filter-btn:hover { color: var(--text); }
+        .filter-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+        /* Project List */
+        .project-list { padding: 0 var(--page-padding); }
+        .project-row { border-top: 1px solid var(--border); padding: 48px 0; display: flex; justify-content: space-between; align-items: center; text-decoration: none; transition: 0.3s var(--ease); opacity: 0; transform: translateY(30px); }
+        .project-row.visible { opacity: 1; transform: translateY(0); }
+        .project-row:last-child { border-bottom: 1px solid var(--border); }
+        .project-row:hover { background: var(--bg-2); padding-left: 24px; padding-right: 24px; }
+        .project-info { width: 50%; }
+        .project-num { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); display: block; margin-bottom: 12px; }
+        .project-title-wrap { display: flex; align-items: center; gap: 16px; }
+        .project-title { font-family: var(--font-display); font-size: clamp(26px, 3vw, 48px); color: var(--text); transition: 0.3s; }
+        .project-arrow { font-size: 32px; color: var(--accent); opacity: 0; transform: translateX(-10px); transition: 0.3s; }
+        .project-row:hover .project-title { color: var(--accent); }
+        .project-row:hover .project-arrow { opacity: 1; transform: translateX(0); }
+        .project-tag { font-family: var(--font-mono); font-size: 11px; color: var(--accent); text-transform: uppercase; margin-top: 8px; display: block; }
+        .project-desc { font-family: var(--font-body); font-size: 14px; color: var(--text-2); margin-top: 6px; line-height: 1.6; max-width: 400px; }
+        .project-visual { width: 45%; }
+        .project-img-placeholder { aspect-ratio: 16/9; background: var(--bg-3); border: 1px solid var(--border); border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .project-row:hover .project-img-placeholder { border-color: rgba(255, 77, 0, 0.4); }
+        .project-img-placeholder span { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); }
+
+        /* Footer CTA */
+        .footer-cta { padding: 120px var(--page-padding); background: var(--bg-2); border-top: 1px solid var(--border); text-align: center; opacity: 0; transform: translateY(30px); transition: 0.8s var(--ease); }
+        .footer-cta.visible { opacity: 1; transform: translateY(0); }
+        .footer-cta h2 { font-family: var(--font-display); font-size: clamp(48px, 7vw, 100px); line-height: 1.1; max-width: 900px; margin: 0 auto; }
+        .footer-cta-sub { font-family: var(--font-serif); font-style: italic; font-size: 24px; color: var(--text-2); margin-top: 16px; }
+        .btn-cta { display: inline-block; background: var(--accent); color: #0A0A0A; font-family: var(--font-display); font-weight: 600; font-size: 16px; padding: 18px 48px; border-radius: 2px; text-decoration: none; margin-top: 48px; transition: 0.2s; }
+        .btn-cta:hover { background: #E04400; }
+        .footer-bar { padding: 40px var(--page-padding) 60px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--bg-2); }
+        .footer-copy { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); }
+        .footer-links, .footer-socials { display: flex; gap: 32px; }
+        .footer-links a, .footer-socials a { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); text-decoration: none; transition: 0.3s; }
+        .footer-links a:hover { color: var(--text); }
+        .footer-socials a:hover { color: var(--accent); }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes scaleX { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+        @media (max-width: 768px) {
+            :root { --page-padding: 24px; }
+            .nav-links, .nav-right .availability, .nav-right .btn-ghost { display: none; }
+            .hamburger { display: flex; }
+            .hero-meta { flex-direction: column; gap: 16px; }
+            .hero-meta-right { align-self: flex-end; }
+            .project-row { flex-direction: column; align-items: flex-start; gap: 32px; }
+            .project-info, .project-visual { width: 100%; }
+            .footer-bar { flex-direction: column; gap: 24px; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            :root { --page-padding: 20px; }
+            .page-hero h1 { font-size: 52px; }
+            .footer-links, .footer-socials { flex-direction: column; gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="cursor"></div>
+
+    <nav id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">JE.</a>
+            <div class="nav-links">
+                <a href="work.html" style="color: var(--accent);">Work</a>
+                <a href="about.html">About</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-right">
+                <div class="availability">
+                    <div class="dot"></div>
+                    Available for work
+                </div>
+                <a href="contact.html" class="btn-ghost">Let's Talk →</a>
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-overlay" id="mobileOverlay">
+        <a href="work.html">Work</a>
+        <a href="about.html">About</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html" class="btn-ghost" style="margin-top: 20px; border-color: var(--accent); color: var(--accent);">Let's Talk →</a>
+    </div>
+
+    <header class="page-hero">
+        <div class="hero-label">SELECTED WORK</div>
+        <h1>
+            <span class="main-text">Work &</span>
+            <span class="accent-text">Projects.</span>
+        </h1>
+        <div class="hero-hr"></div>
+        <div class="hero-meta">
+            <div class="hero-meta-left">A selection of brand, web, and strategy projects.</div>
+            <div class="hero-meta-right">— 06 PROJECTS</div>
+        </div>
+    </header>
+
+    <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">ALL</button>
+        <button class="filter-btn" data-filter="branding">BRANDING</button>
+        <button class="filter-btn" data-filter="web design">WEB DESIGN</button>
+        <button class="filter-btn" data-filter="seo">SEO</button>
+        <button class="filter-btn" data-filter="strategy">STRATEGY</button>
+    </div>
+
+    <main class="project-list">
+        <a href="case-study.html" class="project-row" data-category="branding">
+            <div class="project-info">
+                <span class="project-num">01</span>
+                <div class="project-title-wrap">
+                    <h2 class="project-title">Vibrant Brand Identity</h2>
+                    <span class="project-arrow">→</span>
+                </div>
+                <span class="project-tag">BRANDING</span>
+                <p class="project-desc">A complete visual overhaul for a modern tech startup.</p>
+            </div>
+            <div class="project-visual">
+                <div class="project-img-placeholder">
+                    <span>[ Project Image ]</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="case-study.html" class="project-row" data-category="web design">
+            <div class="project-info">
+                <span class="project-num">02</span>
+                <div class="project-title-wrap">
+                    <h2 class="project-title">Nexus Digital Experience</h2>
+                    <span class="project-arrow">→</span>
+                </div>
+                <span class="project-tag">WEB DESIGN</span>
+                <p class="project-desc">An immersive e-commerce platform for high-end furniture.</p>
+            </div>
+            <div class="project-visual">
+                <div class="project-img-placeholder">
+                    <span>[ Project Image ]</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="case-study.html" class="project-row" data-category="seo">
+            <div class="project-info">
+                <span class="project-num">03</span>
+                <div class="project-title-wrap">
+                    <h2 class="project-title">Orbit SEO Strategy</h2>
+                    <span class="project-arrow">→</span>
+                </div>
+                <span class="project-tag">SEO</span>
+                <p class="project-desc">Data-driven content strategy for a SaaS platform.</p>
+            </div>
+            <div class="project-visual">
+                <div class="project-img-placeholder">
+                    <span>[ Project Image ]</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="case-study.html" class="project-row" data-category="branding">
+            <div class="project-info">
+                <span class="project-num">04</span>
+                <div class="project-title-wrap">
+                    <h2 class="project-title">Pulse Brand System</h2>
+                    <span class="project-arrow">→</span>
+                </div>
+                <span class="project-tag">BRANDING</span>
+                <p class="project-desc">Brand identity and guidelines for a fintech startup.</p>
+            </div>
+            <div class="project-visual">
+                <div class="project-img-placeholder">
+                    <span>[ Project Image ]</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="case-study.html" class="project-row" data-category="web design">
+            <div class="project-info">
+                <span class="project-num">05</span>
+                <div class="project-title-wrap">
+                    <h2 class="project-title">Horizon Web Presence</h2>
+                    <span class="project-arrow">→</span>
+                </div>
+                <span class="project-tag">WEB DESIGN</span>
+                <p class="project-desc">A conversion-focused website for a B2B software company.</p>
+            </div>
+            <div class="project-visual">
+                <div class="project-img-placeholder">
+                    <span>[ Project Image ]</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="case-study.html" class="project-row" data-category="strategy">
+            <div class="project-info">
+                <span class="project-num">06</span>
+                <div class="project-title-wrap">
+                    <h2 class="project-title">Apex Growth Strategy</h2>
+                    <span class="project-arrow">→</span>
+                </div>
+                <span class="project-tag">STRATEGY</span>
+                <p class="project-desc">Full digital strategy for a fast-scaling e-commerce brand.</p>
+            </div>
+            <div class="project-visual">
+                <div class="project-img-placeholder">
+                    <span>[ Project Image ]</span>
+                </div>
+            </div>
+        </a>
+    </main>
+
+    <section class="footer-cta">
+        <span class="label" style="color: var(--text-2)">READY WHEN YOU ARE</span>
+        <h2>Let's build something remarkable.</h2>
+        <p class="footer-cta-sub">Available for freelance projects and full-time roles.</p>
+        <a href="contact.html" class="btn-cta">Start a Project →</a>
+    </section>
+
+    <footer class="footer-bar">
+        <div class="footer-copy">© 2024 Joshua Ehimare. All rights reserved.</div>
+        <div class="footer-links">
+            <a href="work.html">Work</a>
+            <a href="about.html">About</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-socials">
+            <a href="#">LinkedIn</a>
+            <a href="#">Twitter</a>
+            <a href="#">Instagram</a>
+            <a href="#">Dribbble</a>
+        </div>
+    </footer>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+
+        // Navigation Scroll Behavior
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileOverlay.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Filter Logic
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectRows = document.querySelectorAll('.project-row');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filter = btn.getAttribute('data-filter');
+                
+                projectRows.forEach(row => {
+                    if (filter === 'all' || row.getAttribute('data-category') === filter) {
+                        row.style.display = 'flex';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Intersection Observer for Animations
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section, .project-row, .footer-cta').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
