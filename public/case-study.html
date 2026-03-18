@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Name — Joshua Ehimare</title>
-    <meta name="description" content="Case study for Project Name by Joshua Ehimare.">
+    <title>Vanguard Studio — Case Study | Joshua Ehimare</title>
+    <meta name="description" content="Case study for Vanguard Studio visual identity project by Joshua Ehimare.">
     
     <!-- Fonts -->
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
@@ -23,7 +23,6 @@
             --font-display: 'Clash Display', sans-serif;
             --font-body: 'DM Sans', sans-serif;
             --font-mono: 'Space Mono', monospace;
-            --nav-height: 80px;
         }
 
         * {
@@ -41,7 +40,7 @@
             color: var(--text);
             font-family: var(--font-body);
             overflow-x: hidden;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         h1, h2, h3, h4 {
@@ -62,15 +61,15 @@
             padding: 0 24px;
         }
 
-        /* Navigation */
+        /* Navigation Fix */
         nav {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: var(--nav-height);
-            background: rgba(13, 13, 13, 0.8);
-            backdrop-filter: blur(12px);
+            height: 70px;
+            background: #0D0D0D;
+            backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border);
             z-index: 1000;
             display: flex;
@@ -89,7 +88,6 @@
             font-size: 24px;
             font-weight: 700;
             color: var(--accent);
-            letter-spacing: -1px;
         }
 
         .nav-links {
@@ -102,77 +100,113 @@
             font-family: var(--font-mono);
             font-size: 13px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-secondary);
+            letter-spacing: 0.1em;
+            color: var(--text);
+            transition: color 0.2s ease;
         }
 
         .nav-links a:hover {
             color: var(--accent);
         }
 
-        .btn-outline {
+        .btn-talk {
             padding: 10px 20px;
             border: 1px solid var(--accent);
             color: var(--accent);
+            background: transparent;
             font-family: var(--font-mono);
-            font-size: 12px;
+            font-size: 13px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: 0.3s;
+            transition: all 0.2s ease;
         }
 
-        .btn-outline:hover {
+        .btn-talk:hover {
             background: var(--accent);
-            color: var(--bg);
+            color: #0D0D0D;
         }
 
-        /* Mobile Menu */
         .hamburger {
             display: none;
-            flex-direction: column;
-            gap: 6px;
+            background: transparent;
+            border: none;
             cursor: pointer;
+            padding: 8px;
             z-index: 1100;
         }
 
         .hamburger span {
             width: 24px;
             height: 2px;
-            background: var(--text);
-            transition: 0.3s;
+            background: #F5F0E8;
+            display: block;
+            margin: 5px 0;
+            transition: all 0.3s ease;
         }
 
-        .mobile-overlay {
+        /* Hamburger Active State */
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* Mobile Overlay */
+        .mobile-menu {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
+            width: 100vw;
             height: 100vh;
-            background: rgba(13, 13, 13, 0.95);
+            background: #0D0D0D;
+            z-index: 999;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 40px;
-            z-index: 1050;
-            transform: translateY(-100%);
-            transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
-        .mobile-overlay.active {
+        .mobile-menu.menu-open {
+            opacity: 1;
+            pointer-events: all;
             transform: translateY(0);
         }
 
-        .mobile-overlay a {
+        .mobile-nav-link {
             font-family: var(--font-display);
             font-size: 48px;
-            font-weight: 600;
-            text-transform: uppercase;
+            color: #F5F0E8;
+            text-decoration: none;
+            transition: color 0.2s ease;
         }
 
-        /* Project Hero */
-        .project-hero {
-            padding-top: calc(var(--nav-height) + 40px);
+        .mobile-nav-link:hover {
+            color: var(--accent);
+        }
+
+        .mobile-menu .btn-talk {
+            max-width: 280px;
+            width: 100%;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            nav { height: 60px; }
+            .nav-links { display: none; }
+            .hamburger { display: block; }
+        }
+
+        /* Hero */
+        .hero {
+            padding-top: 140px;
             padding-bottom: 80px;
         }
 
@@ -180,340 +214,207 @@
             display: inline-block;
             font-family: var(--font-mono);
             font-size: 12px;
-            color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 1px;
+            color: var(--text-secondary);
             margin-bottom: 40px;
         }
 
-        .hero-img-placeholder {
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        .hero-image {
             width: 100%;
-            aspect-ratio: 16/9;
+            aspect-ratio: 16/7;
             background: #1A1A1A;
             border: 2px dashed var(--accent);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 48px;
+            margin-bottom: 60px;
         }
 
-        .hero-img-placeholder span {
+        .hero-image span {
             font-family: var(--font-mono);
             color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
-        .project-title {
-            font-size: clamp(48px, 8vw, 80px);
-            margin-bottom: 24px;
+        .hero-title {
+            font-size: clamp(40px, 8vw, 100px);
+            margin-bottom: 40px;
         }
 
-        .meta-row {
+        .hero-meta {
             display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            gap: 60px;
+            border-top: 1px solid var(--border);
+            padding-top: 32px;
         }
 
-        .meta-row span b {
-            color: var(--text);
-            font-weight: 400;
-        }
-
-        .slash {
-            color: var(--accent);
-        }
-
-        /* Overview Block */
-        .overview {
-            padding: 80px 0;
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 80px;
-        }
-
-        .overview h2 {
-            font-size: 32px;
-            margin-bottom: 24px;
-        }
-
-        .overview p {
-            font-size: 18px;
-            color: var(--text-secondary);
-            max-width: 600px;
-        }
-
-        .stats-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-        }
-
-        .stat-item label {
+        .meta-item .label {
             display: block;
             font-family: var(--font-mono);
-            font-size: 10px;
+            font-size: 11px;
             color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 8px;
         }
 
-        .stat-item span {
+        .meta-item .value {
             font-size: 18px;
-            font-weight: 500;
         }
 
-        /* Sections General */
-        section {
+        /* Overview */
+        .overview {
+            padding: 100px 0;
+            display: grid;
+            grid-template-columns: 60fr 40fr;
+            gap: 80px;
+        }
+
+        .overview-text h2 {
+            font-size: 32px;
+            margin-bottom: 24px;
+        }
+
+        .overview-text p {
+            color: var(--text-secondary);
+            font-size: 18px;
+            margin-bottom: 24px;
+        }
+
+        .stats-card {
+            background: var(--surface);
+            padding: 40px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-item {
+            margin-bottom: 32px;
+        }
+
+        .stat-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .stat-val {
+            display: block;
+            font-family: var(--font-display);
+            font-size: 48px;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Section Blocks */
+        .section-block {
             padding: 100px 0;
             position: relative;
         }
 
-        .section-number {
+        .section-num {
             position: absolute;
             top: 40px;
             left: 0;
-            font-family: var(--font-mono);
-            font-size: 120px;
-            font-weight: 700;
-            color: var(--accent);
-            opacity: 0.1;
+            font-family: var(--font-display);
+            font-size: 200px;
+            color: var(--text);
+            opacity: 0.05;
             line-height: 1;
-            pointer-events: none;
+            z-index: -1;
         }
 
-        .section-heading {
+        .section-block h2 {
             font-size: 48px;
             margin-bottom: 40px;
-            position: relative;
-            z-index: 1;
+            max-width: 600px;
         }
 
-        /* Challenge */
-        .challenge p {
-            font-size: 18px;
-            color: var(--text-secondary);
-            max-width: 800px;
-            margin-bottom: 24px;
-        }
-
-        /* Process */
-        .process-row {
-            display: flex;
+        .process-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
             align-items: center;
-            gap: 80px;
-            margin-bottom: 100px;
+            margin-bottom: 80px;
         }
 
-        .process-row:nth-child(even) {
-            flex-direction: row-reverse;
+        .process-grid.reverse {
+            direction: rtl;
+        }
+
+        .process-grid.reverse .process-content {
+            direction: ltr;
         }
 
         .process-img {
-            flex: 1;
             aspect-ratio: 4/3;
             background: #1A1A1A;
-            border: 2px dashed var(--accent);
+            border: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .process-img span {
-            font-family: var(--font-mono);
-            color: var(--accent);
-            font-size: 12px;
-            text-transform: uppercase;
-        }
-
-        .process-text {
-            flex: 1;
-        }
-
-        .process-text .step-num {
-            font-family: var(--font-mono);
-            font-size: 14px;
-            color: var(--accent);
-            font-weight: 700;
-            margin-bottom: 16px;
-            display: block;
-        }
-
-        .process-text h3 {
-            font-size: 32px;
-            margin-bottom: 16px;
-        }
-
-        .process-text p {
+        .process-content p {
             color: var(--text-secondary);
-        }
-
-        /* Solution */
-        .solution-main {
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: #1A1A1A;
-            border: 2px dashed var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 40px;
-        }
-
-        .solution-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-        }
-
-        .solution-grid .img {
-            aspect-ratio: 4/3;
-            background: #1A1A1A;
-            border: 2px dashed var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 18px;
         }
 
         /* Results */
         .results {
             background: var(--surface);
-            padding: 120px 0;
+            padding: 100px 0;
         }
 
         .results-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 40px;
-            text-align: center;
-        }
-
-        .result-item .num {
-            font-size: 80px;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 8px;
-        }
-
-        .result-item label {
-            font-family: var(--font-mono);
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         /* Next Project */
         .next-project {
-            padding: 100px 0;
+            padding: 120px 0;
+            text-align: center;
             border-top: 1px solid var(--border);
+        }
+
+        .next-project .label {
+            font-family: var(--font-mono);
+            color: var(--text-secondary);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
             display: block;
+        }
+
+        .next-project h2 {
+            font-size: clamp(40px, 6vw, 80px);
             transition: 0.4s;
         }
 
-        .next-project:hover {
-            background: var(--surface);
-        }
-
-        .next-project .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .next-label {
-            font-family: var(--font-mono);
-            font-size: 12px;
+        .next-project a:hover h2 {
             color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .next-title {
-            font-size: clamp(32px, 5vw, 60px);
+            transform: translateY(-10px);
         }
 
         /* Footer */
         footer {
             padding: 100px 0 60px;
             border-top: 1px solid var(--border);
-        }
-
-        .footer-cta {
-            margin-bottom: 80px;
-        }
-
-        .footer-cta h2 {
-            font-size: clamp(40px, 6vw, 80px);
-            margin-bottom: 32px;
-        }
-
-        .footer-cta h2 span {
-            font-style: italic;
-            color: var(--accent);
-        }
-
-        .btn-fill {
-            display: inline-block;
-            padding: 16px 40px;
-            background: var(--accent);
-            color: var(--bg);
-            font-family: var(--font-mono);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: 0.3s;
-        }
-
-        .btn-fill:hover {
-            transform: scale(1.05);
-        }
-
-        .footer-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            font-family: var(--font-mono);
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .footer-socials {
-            display: flex;
-            gap: 24px;
-            margin-bottom: 12px;
-        }
-
-        .footer-socials a:hover {
-            color: var(--accent);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hamburger { display: flex; }
-            .overview { grid-template-columns: 1fr; gap: 40px; }
-            .process-row { flex-direction: column !important; gap: 40px; }
-            .results-grid { grid-template-columns: 1fr; gap: 60px; }
-            .next-project .container { flex-direction: column; align-items: flex-start; gap: 16px; }
-        }
-
-        @media (max-width: 480px) {
-            .container { padding: 0 20px; }
-            .section-heading { font-size: 36px; }
-            .footer-bottom { flex-direction: column; align-items: flex-start; gap: 24px; }
-            .solution-grid { grid-template-columns: 1fr; }
         }
 
         /* Fade-in Animation */
@@ -526,6 +427,14 @@
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-meta { flex-direction: column; gap: 32px; }
+            .overview { grid-template-columns: 1fr; gap: 60px; }
+            .process-grid { grid-template-columns: 1fr; gap: 40px; }
+            .results-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -540,120 +449,90 @@
                 <a href="about.html">About</a>
                 <a href="blog.html">Blog</a>
                 <a href="contact.html">Contact</a>
-                <a href="contact.html" class="btn-outline">Let's Talk</a>
+                <a href="contact.html" class="btn-talk">Let's Talk</a>
             </div>
-            <div class="hamburger" id="hamburger">
+            <button class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </nav>
 
     <!-- Mobile Overlay -->
-    <div class="mobile-overlay" id="mobileOverlay">
-        <a href="work.html">Work</a>
-        <a href="about.html">About</a>
-        <a href="blog.html">Blog</a>
-        <a href="contact.html">Contact</a>
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="work.html" class="mobile-nav-link">Work</a>
+        <a href="about.html" class="mobile-nav-link">About</a>
+        <a href="blog.html" class="mobile-nav-link">Blog</a>
+        <a href="contact.html" class="mobile-nav-link">Contact</a>
+        <a href="contact.html" class="btn-talk mobile-nav-link">Let's Talk</a>
     </div>
 
-    <!-- Project Hero -->
-    <section class="project-hero">
+    <!-- Hero -->
+    <section class="hero fade-in">
         <div class="container">
             <a href="work.html" class="back-link">← Back to Work</a>
-            <div class="hero-img-placeholder fade-in">
+            <div class="hero-image">
                 <span>[ Hero Image ]</span>
             </div>
-            <h1 class="project-title fade-in">Vanguard Studio</h1>
-            <div class="meta-row fade-in">
-                <span>CLIENT: <b>Vanguard Arch</b></span>
-                <span class="slash">/</span>
-                <span>CATEGORY: <b>Web Design</b></span>
-                <span class="slash">/</span>
-                <span>YEAR: <b>2024</b></span>
+            <h1 class="hero-title">Vanguard Studio Identity.</h1>
+            <div class="hero-meta">
+                <div class="meta-item">
+                    <span class="label">Client</span>
+                    <span class="value">Vanguard Studio</span>
+                </div>
+                <div class="meta-item">
+                    <span class="label">Category</span>
+                    <span class="value">Branding & Identity</span>
+                </div>
+                <div class="meta-item">
+                    <span class="label">Year</span>
+                    <span class="value">2024</span>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Overview -->
     <section class="container overview fade-in">
-        <div>
-            <h2>Overview</h2>
-            <p>Vanguard Studio is a leading architectural firm that required a digital presence matching their minimalist and bold physical designs. We embarked on a 6-week journey to redefine their brand identity and build a high-performance portfolio website that showcases their projects with cinematic scale.</p>
+        <div class="overview-text">
+            <h2>The Overview</h2>
+            <p>Vanguard Studio is a forward-thinking architectural firm based in Berlin. They needed a visual identity that reflected their minimalist aesthetic and their commitment to sustainable, high-tech construction.</p>
+            <p>The goal was to create a brand that felt both established and innovative, appealing to high-end developers and private clients alike.</p>
         </div>
         <div class="stats-card">
             <div class="stat-item">
-                <label>Role</label>
-                <span>Lead Designer</span>
+                <span class="stat-val">40%</span>
+                <span class="stat-label">Increase in Inquiries</span>
             </div>
             <div class="stat-item">
-                <label>Timeline</label>
-                <span>6 Weeks</span>
-            </div>
-            <div class="stat-item">
-                <label>Tools</label>
-                <span>Figma, Webflow, Notion</span>
+                <span class="stat-val">2.5x</span>
+                <span class="stat-label">Brand Recognition</span>
             </div>
         </div>
     </section>
 
-    <!-- The Challenge -->
-    <section class="challenge fade-in">
-        <div class="container">
-            <div class="section-number">01</div>
-            <h2 class="section-heading">The Challenge</h2>
-            <p>The primary challenge was balancing high-resolution imagery with lightning-fast load times. The firm had a massive archive of 4K photography that needed to be accessible without compromising the user experience. Additionally, the navigation needed to be intuitive yet unconventional to reflect their innovative approach to architecture.</p>
-            <p>We needed to create a system that allowed the work to speak for itself, removing all unnecessary UI clutter while maintaining a strong brand presence through typography and motion.</p>
-        </div>
+    <!-- Challenge -->
+    <section class="container section-block fade-in">
+        <span class="section-num">01</span>
+        <h2>The Challenge</h2>
+        <p style="color: var(--text-secondary); font-size: 18px; max-width: 800px;">The architectural market is saturated with generic "minimalist" brands. Vanguard needed to differentiate itself by leaning into its technical expertise without losing its artistic soul.</p>
     </section>
 
     <!-- Process -->
-    <section class="process fade-in">
-        <div class="container">
-            <div class="section-number">02</div>
-            <h2 class="section-heading">The Process</h2>
-            
-            <div class="process-row fade-in">
-                <div class="process-img"><span>[ Process Image ]</span></div>
-                <div class="process-text">
-                    <span class="step-num">01. STRATEGY</span>
-                    <h3>Discovery & Audit</h3>
-                    <p>We began by auditing their existing assets and identifying the core values of the firm. This phase involved deep-dive workshops to understand their target audience and the emotional impact they wanted their buildings to convey through the screen.</p>
-                </div>
-            </div>
-
-            <div class="process-row fade-in">
-                <div class="process-img"><span>[ Process Image ]</span></div>
-                <div class="process-text">
-                    <span class="step-num">02. DESIGN</span>
-                    <h3>Visual Direction</h3>
-                    <p>Taking inspiration from brutalist architecture, we developed a high-contrast visual system. We focused on a strict grid layout that could be broken by large, full-bleed imagery to create a sense of space and rhythm.</p>
-                </div>
-            </div>
-
-            <div class="process-row fade-in">
-                <div class="process-img"><span>[ Process Image ]</span></div>
-                <div class="process-text">
-                    <span class="step-num">03. BUILD</span>
-                    <h3>Development</h3>
-                    <p>The final phase involved building a custom CMS that allowed the Vanguard team to easily upload new projects while maintaining the strict design standards we set. We implemented advanced lazy-loading and image optimization techniques.</p>
-                </div>
+    <section class="container section-block fade-in">
+        <span class="section-num">02</span>
+        <h2>The Process</h2>
+        <div class="process-grid">
+            <div class="process-img"><span>[ Strategy ]</span></div>
+            <div class="process-content">
+                <p>We started with a deep dive into the firm's architectural philosophy, identifying "Precision" and "Organic Growth" as the two core pillars of the brand.</p>
             </div>
         </div>
-    </section>
-
-    <!-- Solution -->
-    <section class="solution fade-in">
-        <div class="container">
-            <div class="section-number">03</div>
-            <h2 class="section-heading">The Solution</h2>
-            <div class="solution-main fade-in">
-                <span>[ Solution Image ]</span>
-            </div>
-            <div class="solution-grid">
-                <div class="img fade-in"><span>[ Solution Image ]</span></div>
-                <div class="img fade-in"><span>[ Solution Image ]</span></div>
+        <div class="process-grid reverse">
+            <div class="process-img"><span>[ Design ]</span></div>
+            <div class="process-content">
+                <p>The visual system was built around a custom-drawn monogram and a grid-based typography system that mimics architectural blueprints.</p>
             </div>
         </div>
     </section>
@@ -661,45 +540,40 @@
     <!-- Results -->
     <section class="results fade-in">
         <div class="container">
+            <span class="section-num">03</span>
+            <h2>The Results</h2>
             <div class="results-grid">
-                <div class="result-item">
-                    <div class="num">340%</div>
-                    <label>Increase in Inquiries</label>
+                <div class="stat-item">
+                    <span class="stat-val">12</span>
+                    <span class="stat-label">New High-Value Contracts</span>
                 </div>
-                <div class="result-item">
-                    <div class="num">4.2x</div>
-                    <label>Average Session Time</label>
+                <div class="stat-item">
+                    <span class="stat-val">100%</span>
+                    <span class="stat-label">Client Satisfaction</span>
                 </div>
-                <div class="result-item">
-                    <div class="num">#1</div>
-                    <label>Design Award Winner</label>
+                <div class="stat-item">
+                    <span class="stat-val">Gold</span>
+                    <span class="stat-label">Design Award Winner</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Next Project -->
-    <a href="case-study.html" class="next-project fade-in">
+    <section class="next-project fade-in">
         <div class="container">
-            <div class="next-label">Next Project →</div>
-            <h2 class="next-title">Lumina E-commerce</h2>
+            <span class="label">Next Project</span>
+            <a href="#">
+                <h2>Lumina E-commerce →</h2>
+            </a>
         </div>
-    </a>
+    </section>
 
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-cta">
-                <h2>Ready to build <br> <span>something bold?</span></h2>
-                <a href="contact.html" class="btn-fill">Start a Project</a>
-            </div>
             <div class="footer-bottom">
                 <div class="footer-left">
-                    <div class="footer-socials">
-                        <a href="#">LinkedIn</a>
-                        <a href="#">Twitter</a>
-                        <a href="#">Instagram</a>
-                    </div>
                     <p>© 2024 JOSHUA EHIMARE. ALL RIGHTS RESERVED.</p>
                 </div>
                 <div class="footer-right">
@@ -710,24 +584,38 @@
     </footer>
 
     <script>
-        // Mobile Menu
+        // Navigation Logic
         const hamburger = document.getElementById('hamburger');
-        const mobileOverlay = document.getElementById('mobileOverlay');
-        
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+        function openMenu() {
+            mobileMenu.classList.add('menu-open');
+            hamburger.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            mobileMenu.classList.remove('menu-open');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
         hamburger.addEventListener('click', () => {
-            mobileOverlay.classList.toggle('active');
-            hamburger.classList.toggle('active');
-            
-            // Hamburger animation
-            const spans = hamburger.querySelectorAll('span');
-            if(hamburger.classList.contains('active')) {
-                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                spans[1].style.opacity = '0';
-                spans[2].style.transform = 'rotate(-45deg) translate(7px, -7px)';
+            if (mobileMenu.classList.contains('menu-open')) {
+                closeMenu();
             } else {
-                spans[0].style.transform = 'none';
-                spans[1].style.opacity = '1';
-                spans[2].style.transform = 'none';
+                openMenu();
+            }
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target === mobileMenu) {
+                closeMenu();
             }
         });
 
