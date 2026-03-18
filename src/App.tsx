@@ -6,12 +6,12 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
+import { About } from './pages/About';
+import { Contact } from './pages/Contact';
 import { Work } from './pages/Work';
 import { CaseStudy } from './pages/CaseStudy';
-import { About } from './pages/About';
 import { Blog } from './pages/Blog';
 import { BlogPost } from './pages/BlogPost';
-import { Contact } from './pages/Contact';
 import { ScrollToTop } from './components/ScrollToTop';
 
 export default function App() {
