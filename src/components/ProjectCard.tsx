@@ -9,13 +9,10 @@ export function ProjectCard({ project }: { project: Project }) {
       className="group relative bg-surface border border-border overflow-hidden"
     >
       <Link to={`/work/${project.slug}`}>
-        <div className="aspect-[4/3] overflow-hidden">
-          <img
-            src={project.image}
-            alt={project.title}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            referrerPolicy="no-referrer"
-          />
+        <div className="h-[220px] bg-[#1A1A1A] border-2 border-dashed border-accent flex items-center justify-center overflow-hidden">
+          <span className="text-accent font-mono uppercase tracking-widest">
+            [ Project Image ]
+          </span>
         </div>
         <div className="p-8">
           <div className="flex justify-between items-start mb-4">
