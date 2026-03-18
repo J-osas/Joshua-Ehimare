@@ -1,12 +1,32 @@
 import { motion } from 'motion/react';
-import { projects, blogPosts } from '../data/content';
 import { Link } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { client, urlFor } from '../lib/sanity';
+import { projectsQuery, postsQuery } from '../lib/queries';
 
 export function Home() {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const [projects, setProjects] = useState<any[]>([]);
+  const [posts, setPosts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [projectsData, postsData] = await Promise.all([
+          client.fetch(projectsQuery),
+          client.fetch(postsQuery)
+        ]);
+        setProjects(projectsData);
+        setPosts(postsData);
+      } catch (err) {
+        console.error("Error fetching home data:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+
     const observerOptions = {
       threshold: 0.1,
       rootMargin: '0px 0px -50px 0px'
@@ -116,31 +136,37 @@ export function Home() {
         </div>
 
         <div className="flex flex-col border-t border-border">
-          {projects.slice(0, 3).map((project) => (
-            <Link 
-              key={project.slug} 
-              to={`/work/${project.slug}`} 
-              className="group flex flex-col md:flex-row justify-between items-center py-12 border-b border-border no-underline transition-all duration-500 hover:bg-surface/50 px-4"
-            >
-              <div className="flex items-center gap-8 md:gap-16 w-full md:w-auto">
-                <span className="font-mono text-[14px] text-text-3">{project.num}</span>
-                <h3 className="font-display text-[clamp(28px,4vw,52px)] font-semibold transition-transform duration-500 group-hover:translate-x-4">
-                  {project.title} <span className="text-accent opacity-0 group-hover:opacity-100 transition-opacity ml-4">→</span>
-                </h3>
-              </div>
-              <div className="flex items-center gap-12 mt-8 md:mt-0 w-full md:w-auto justify-between md:justify-end">
-                <span className="font-mono text-[11px] text-secondary-text uppercase tracking-[0.2em]">{project.category}</span>
-                <div className="w-[120px] h-[80px] md:w-[200px] md:h-[120px] bg-bg-3 overflow-hidden rounded-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 hidden sm:block">
-                  <img 
-                    src={project.image} 
-                    alt={project.title} 
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100"
-                    referrerPolicy="no-referrer"
-                  />
+          {loading ? (
+            <div className="py-20 text-center font-mono text-[11px] text-text-3 uppercase tracking-widest">Loading projects...</div>
+          ) : (
+            projects.slice(0, 3).map((project, idx) => (
+              <Link 
+                key={project.slug} 
+                to={`/work/${project.slug}`} 
+                className="group flex flex-col md:flex-row justify-between items-center py-12 border-b border-border no-underline transition-all duration-500 hover:bg-surface/50 px-4"
+              >
+                <div className="flex items-center gap-8 md:gap-16 w-full md:w-auto">
+                  <span className="font-mono text-[14px] text-text-3">{(idx + 1).toString().padStart(2, '0')}</span>
+                  <h3 className="font-display text-[clamp(28px,4vw,52px)] font-semibold transition-transform duration-500 group-hover:translate-x-4">
+                    {project.title} <span className="text-accent opacity-0 group-hover:opacity-100 transition-opacity ml-4">→</span>
+                  </h3>
                 </div>
-              </div>
-            </Link>
-          ))}
+                <div className="flex items-center gap-12 mt-8 md:mt-0 w-full md:w-auto justify-between md:justify-end">
+                  <span className="font-mono text-[11px] text-secondary-text uppercase tracking-[0.2em]">{project.category}</span>
+                  <div className="w-[120px] h-[80px] md:w-[200px] md:h-[120px] bg-bg-3 overflow-hidden rounded-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 hidden sm:block">
+                    {project.image && (
+                      <img 
+                        src={urlFor(project.image).width(400).url()} 
+                        alt={project.title} 
+                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100"
+                        referrerPolicy="no-referrer"
+                      />
+                    )}
+                  </div>
+                </div>
+              </Link>
+            ))
+          )}
         </div>
       </section>
 
@@ -213,27 +239,33 @@ export function Home() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {blogPosts.slice(0, 2).map((post) => (
-            <Link 
-              key={post.id} 
-              to={`/blog/${post.slug}`} 
-              className="group p-8 md:p-12 bg-surface border border-border rounded-[2px] no-underline transition-all duration-500 hover:border-accent"
-            >
-              <span className="inline-block bg-accent/10 text-accent font-mono text-[10px] px-3 py-1 rounded-full mb-6 uppercase tracking-widest">
-                {post.category}
-              </span>
-              <h3 className="font-display text-3xl md:text-4xl font-bold mb-6 group-hover:text-accent transition-colors">
-                {post.title}
-              </h3>
-              <p className="text-secondary-text text-lg mb-8 line-clamp-2">
-                {post.excerpt}
-              </p>
-              <div className="flex justify-between items-center pt-8 border-t border-border">
-                <span className="font-mono text-[11px] text-text-3 uppercase tracking-widest">{post.date}</span>
-                <span className="font-mono text-[11px] text-accent uppercase tracking-widest group-hover:translate-x-2 transition-transform">Read →</span>
-              </div>
-            </Link>
-          ))}
+          {loading ? (
+            <div className="col-span-2 py-20 text-center font-mono text-[11px] text-text-3 uppercase tracking-widest">Loading insights...</div>
+          ) : (
+            posts.slice(0, 2).map((post) => (
+              <Link 
+                key={post._id} 
+                to={`/blog/${post.slug}`} 
+                className="group p-8 md:p-12 bg-surface border border-border rounded-[2px] no-underline transition-all duration-500 hover:border-accent"
+              >
+                <span className="inline-block bg-accent/10 text-accent font-mono text-[10px] px-3 py-1 rounded-full mb-6 uppercase tracking-widest">
+                  {post.category}
+                </span>
+                <h3 className="font-display text-3xl md:text-4xl font-bold mb-6 group-hover:text-accent transition-colors">
+                  {post.title}
+                </h3>
+                <p className="text-secondary-text text-lg mb-8 line-clamp-2">
+                  {post.excerpt}
+                </p>
+                <div className="flex justify-between items-center pt-8 border-t border-border">
+                  <span className="font-mono text-[11px] text-text-3 uppercase tracking-widest">
+                    {post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : "Recently"}
+                  </span>
+                  <span className="font-mono text-[11px] text-accent uppercase tracking-widest group-hover:translate-x-2 transition-transform">Read →</span>
+                </div>
+              </Link>
+            ))
+          )}
         </div>
       </section>
     </div>

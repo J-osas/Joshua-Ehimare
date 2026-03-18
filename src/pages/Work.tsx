@@ -2,20 +2,43 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { cn } from '../lib/utils';
-import { projects } from '../data/content';
+import { client, urlFor } from '../lib/sanity';
+import { projectsQuery } from '../lib/queries';
 
-const categories = ["ALL", "WEB DESIGN", "UI/UX DESIGN"];
+const categories = ["ALL", "WEB DESIGN", "UI/UX DESIGN", "BRANDING", "SEO", "STRATEGY"];
 
 export function Work() {
   const [activeFilter, setActiveFilter] = useState("ALL");
+  const [projects, setProjects] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     document.title = "Work — Joshua Ehimare | Selected Projects";
+    
+    client.fetch(projectsQuery)
+      .then(data => {
+        setProjects(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error fetching projects:", err);
+        setLoading(false);
+      });
   }, []);
 
   const filteredProjects = activeFilter === "ALL" 
     ? projects 
     : projects.filter(p => p.category === activeFilter);
+
+  if (loading) {
+    return (
+      <div className="w-full min-h-screen bg-bg flex items-center justify-center py-32">
+        <span className="font-mono text-[12px] text-text-2 uppercase tracking-widest">
+          Loading projects...
+        </span>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full bg-bg text-text overflow-x-hidden selection:bg-accent selection:text-white">
@@ -124,7 +147,7 @@ export function Work() {
                   {/* LEFT side (50%) */}
                   <div className="w-full lg:w-1/2 flex flex-col">
                     <span className="font-mono text-[11px] text-text-3 mb-3 block">
-                      {project.num}
+                      {(idx + 1).toString().padStart(2, '0')}
                     </span>
                     <h2 className="font-display text-[clamp(26px,3vw,48px)] text-text mb-2 font-bold group-hover:text-accent transition-colors flex items-center">
                       {project.title}
@@ -136,7 +159,7 @@ export function Work() {
                       {project.category}
                     </span>
                     <p className="font-sans text-[14px] text-text-2 leading-[1.6] max-w-[400px]">
-                      {project.desc}
+                      {project.description}
                     </p>
                   </div>
 
@@ -145,16 +168,22 @@ export function Work() {
                     <div className="relative w-full aspect-video overflow-hidden 
                       rounded-[4px] border border-[var(--border)] 
                       group-hover:border-[rgba(255,77,0,0.4)] 
-                      transition-colors duration-300">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover object-top
-                          grayscale group-hover:grayscale-0
-                          scale-100 group-hover:scale-105
-                          transition-all duration-500 ease-out"
-                        referrerPolicy="no-referrer"
-                      />
+                      transition-colors duration-300 bg-bg-3">
+                      {project.image ? (
+                        <img
+                          src={urlFor(project.image).width(800).url()}
+                          alt={project.title}
+                          className="w-full h-full object-cover object-top
+                            grayscale group-hover:grayscale-0
+                            scale-100 group-hover:scale-105
+                            transition-all duration-500 ease-out"
+                          referrerPolicy="no-referrer"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                           <span className="font-mono text-[10px] text-text-3 uppercase tracking-widest">No Image</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </Link>

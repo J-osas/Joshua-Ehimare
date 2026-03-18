@@ -1,10 +1,39 @@
-import { blogPosts } from '../data/content';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { PageHero, Section } from '../components/Shared';
 import { cn } from '../lib/utils';
+import { useEffect, useState } from 'react';
+import { client } from '../lib/sanity';
+import { postsQuery } from '../lib/queries';
 
 export function Blog() {
+  const [posts, setPosts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    document.title = "Insights — Joshua Ehimare | Blog";
+    
+    client.fetch(postsQuery)
+      .then(data => {
+        setPosts(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error fetching posts:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="w-full min-h-screen bg-bg flex items-center justify-center py-32">
+        <span className="font-mono text-[12px] text-text-2 uppercase tracking-widest">
+          Loading insights...
+        </span>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full">
       <PageHero 
@@ -16,16 +45,16 @@ export function Blog() {
 
       <Section className="pt-0">
         <div className="max-w-[1400px] mx-auto flex flex-col">
-          {blogPosts.map((post, index) => (
+          {posts.map((post, index) => (
             <motion.div
-              key={post.id}
+              key={post._id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
               className={cn(
                 "border-t border-border group",
-                index === blogPosts.length - 1 && "border-b border-border"
+                index === posts.length - 1 && "border-b border-border"
               )}
             >
               <Link 
@@ -34,9 +63,9 @@ export function Blog() {
               >
                 <div className="flex flex-col gap-4 max-w-[800px]">
                   <div className="flex items-center gap-4 font-mono text-[11px] text-text-3 uppercase tracking-widest">
-                    <span>{post.date}</span>
+                    <span>{post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : "Recently"}</span>
                     <span className="text-accent">•</span>
-                    <span>{post.readingTime}</span>
+                    <span>{post.readTime || 5} MIN READ</span>
                   </div>
                   <h3 className="font-display text-[clamp(28px,3.5vw,48px)] font-semibold leading-[1.2] group-hover:text-accent transition-colors">
                     {post.title}
