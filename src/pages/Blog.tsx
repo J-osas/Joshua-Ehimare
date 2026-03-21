@@ -3,8 +3,18 @@ import { motion } from 'motion/react';
 import { PageHero, Section } from '../components/Shared';
 import { cn } from '../lib/utils';
 import { useEffect, useState } from 'react';
-import { client } from '../lib/sanity';
-import { postsQuery } from '../lib/queries';
+import { client, urlFor } from '../lib/sanity';
+
+const query = `*[_type == "post"] | order(publishedAt desc) {
+  _id,
+  title,
+  "slug": slug.current,
+  category,
+  excerpt,
+  coverImage,
+  publishedAt,
+  readTime
+}`;
 
 export function Blog() {
   const [posts, setPosts] = useState<any[]>([]);
@@ -13,13 +23,13 @@ export function Blog() {
   useEffect(() => {
     document.title = "Insights — Joshua Ehimare | Blog";
     
-    client.fetch(postsQuery)
-      .then(data => {
+    client.fetch(query)
+      .then((data) => {
         setPosts(data);
         setLoading(false);
       })
-      .catch(err => {
-        console.error("Error fetching posts:", err);
+      .catch((err) => {
+        console.error(err);
         setLoading(false);
       });
   }, []);
@@ -63,7 +73,15 @@ export function Blog() {
               >
                 <div className="flex flex-col gap-4 max-w-[800px]">
                   <div className="flex items-center gap-4 font-mono text-[11px] text-text-3 uppercase tracking-widest">
-                    <span>{post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : "Recently"}</span>
+                    <span>
+                      {new Date(post.publishedAt).toLocaleDateString(
+                        'en-GB', { 
+                          day: 'numeric', 
+                          month: 'long', 
+                          year: 'numeric' 
+                        }
+                      )}
+                    </span>
                     <span className="text-accent">•</span>
                     <span>{post.readTime || 5} MIN READ</span>
                   </div>

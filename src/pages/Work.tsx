@@ -3,9 +3,20 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { cn } from '../lib/utils';
 import { client, urlFor } from '../lib/sanity';
-import { projectsQuery } from '../lib/queries';
 
 const categories = ["ALL", "WEB DESIGN", "UI/UX DESIGN", "BRANDING", "SEO", "STRATEGY"];
+
+const query = `*[_type == "project"] | order(order asc) {
+  _id,
+  title,
+  "slug": slug.current,
+  category,
+  description,
+  image,
+  url,
+  isFigma,
+  year
+}`;
 
 export function Work() {
   const [activeFilter, setActiveFilter] = useState("ALL");
@@ -15,13 +26,13 @@ export function Work() {
   useEffect(() => {
     document.title = "Work — Joshua Ehimare | Selected Projects";
     
-    client.fetch(projectsQuery)
-      .then(data => {
+    client.fetch(query)
+      .then((data) => {
         setProjects(data);
         setLoading(false);
       })
-      .catch(err => {
-        console.error("Error fetching projects:", err);
+      .catch((err) => {
+        console.error(err);
         setLoading(false);
       });
   }, []);
@@ -32,9 +43,19 @@ export function Work() {
 
   if (loading) {
     return (
-      <div className="w-full min-h-screen bg-bg flex items-center justify-center py-32">
-        <span className="font-mono text-[12px] text-text-2 uppercase tracking-widest">
+      <div className="flex items-center justify-center py-32 px-[6vw]">
+        <span className="font-mono text-[11px] text-[#6B6560] uppercase tracking-[0.15em]">
           Loading projects...
+        </span>
+      </div>
+    );
+  }
+
+  if (projects.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-32 px-[6vw]">
+        <span className="font-mono text-[11px] text-[#6B6560] uppercase tracking-[0.15em]">
+          No projects found.
         </span>
       </div>
     );
@@ -177,12 +198,11 @@ export function Work() {
                             grayscale group-hover:grayscale-0
                             scale-100 group-hover:scale-105
                             transition-all duration-500 ease-out"
-                          referrerPolicy="no-referrer"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                           <span className="font-mono text-[10px] text-text-3 uppercase tracking-widest">No Image</span>
-                        </div>
+                        <span className="font-mono text-[11px] text-[#3A3530]">
+                          [ Project Image ]
+                        </span>
                       )}
                     </div>
                   </div>

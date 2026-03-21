@@ -2,7 +2,24 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { client, urlFor } from '../lib/sanity';
-import { projectBySlugQuery } from '../lib/queries';
+
+const query = `*[_type == "project" && slug.current == $slug][0] {
+  _id,
+  title,
+  "slug": slug.current,
+  category,
+  description,
+  image,
+  url,
+  isFigma,
+  year,
+  overview,
+  challenge,
+  solution,
+  role,
+  timeline,
+  tools
+}`;
 
 export function CaseStudy() {
   const { slug } = useParams();
@@ -10,29 +27,38 @@ export function CaseStudy() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
-    client.fetch(projectBySlugQuery, { slug })
-      .then(data => {
-        setProject(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Error fetching project:", err);
-        setLoading(false);
-      });
+    if (slug) {
+      client.fetch(query, { slug })
+        .then((data) => {
+          setProject(data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error(err);
+          setLoading(false);
+        });
+    }
   }, [slug]);
 
   if (loading) {
     return (
-      <div className="w-full min-h-screen bg-bg flex items-center justify-center py-32">
-        <span className="font-mono text-[12px] text-text-2 uppercase tracking-widest">
-          Loading project...
+      <div className="flex items-center justify-center py-32 px-[6vw]">
+        <span className="font-mono text-[11px] text-[#6B6560] uppercase tracking-[0.15em]">
+          Loading projects...
         </span>
       </div>
     );
   }
 
-  if (!project) return <div className="p-20 text-center font-display text-2xl">Project not found</div>;
+  if (!project) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <span className="font-mono text-[11px] text-[#6B6560] uppercase tracking-[0.15em]">
+          Project not found.
+        </span>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full bg-bg text-text selection:bg-accent selection:text-white">
@@ -44,17 +70,12 @@ export function CaseStudy() {
           </Link>
           
           <div className="relative w-full aspect-video overflow-hidden rounded-[4px] mb-16 bg-bg-3">
-            {project.image ? (
+            {project.image && (
               <img
-                src={urlFor(project.image).width(1600).url()}
+                src={urlFor(project.image).width(1400).url()}
                 alt={project.title}
-                className="w-full h-full object-cover object-top"
-                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover"
               />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center">
-                 <span className="font-mono text-[10px] text-text-3 uppercase tracking-widest">No Image</span>
-              </div>
             )}
           </div>
           
@@ -71,16 +92,29 @@ export function CaseStudy() {
               </p>
 
               <div className="flex flex-wrap gap-4">
-                {project.url && (
-                  <a href={project.url} target="_blank" 
+                {project.isFigma ? (
+                  <a href={project.url} target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 font-mono 
-                      text-[12px] uppercase tracking-[0.1em] 
-                      text-[var(--accent)] border border-[var(--accent)] 
-                      px-5 py-3 rounded-[2px]
-                      hover:bg-[var(--accent)] hover:text-[#0A0A0A] 
-                      transition-all duration-200 no-underline">
-                    {project.isFigma ? "View Figma Design →" : "Visit Live Site →"}
+                    className="inline-flex items-center gap-2 
+                      font-mono text-[12px] uppercase 
+                      tracking-[0.1em] text-[#FF4D00] 
+                      border border-[#FF4D00] px-5 py-3 
+                      rounded-[2px] mt-6
+                      hover:bg-[#FF4D00] hover:text-[#0A0A0A] 
+                      transition-all duration-200">
+                    View Figma Design →
+                  </a>
+                ) : (
+                  <a href={project.url} target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 
+                      font-mono text-[12px] uppercase 
+                      tracking-[0.1em] text-[#FF4D00] 
+                      border border-[#FF4D00] px-5 py-3 
+                      rounded-[2px] mt-6
+                      hover:bg-[#FF4D00] hover:text-[#0A0A0A] 
+                      transition-all duration-200">
+                    Visit Live Site →
                   </a>
                 )}
               </div>
@@ -95,21 +129,21 @@ export function CaseStudy() {
           <div className="lg:col-span-4 space-y-12">
             <div>
               <span className="font-mono text-[11px] text-accent uppercase tracking-[0.2em] mb-4 block">ROLE</span>
-              <p className="font-sans text-[16px] text-text-2">{project.role || "Designer"}</p>
+              <p className="font-sans text-[16px] text-text-2">{project.role}</p>
             </div>
             <div>
               <span className="font-mono text-[11px] text-accent uppercase tracking-[0.2em] mb-4 block">TIMELINE</span>
-              <p className="font-sans text-[16px] text-text-2">{project.timeline || project.year}</p>
+              <p className="font-sans text-[16px] text-text-2">{project.timeline}</p>
             </div>
             <div>
               <span className="font-mono text-[11px] text-accent uppercase tracking-[0.2em] mb-4 block">TOOLS</span>
-              <p className="font-sans text-[16px] text-text-2">{project.tools || "Figma, Webflow"}</p>
+              <p className="font-sans text-[16px] text-text-2">{project.tools}</p>
             </div>
           </div>
           <div className="lg:col-span-8 space-y-16">
             <div>
               <h2 className="font-display text-[32px] font-bold mb-6">Overview</h2>
-              <p className="font-sans text-[18px] text-text-2 leading-relaxed">{project.overview || project.description}</p>
+              <p className="font-sans text-[18px] text-text-2 leading-relaxed">{project.overview}</p>
             </div>
             {project.challenge && (
               <div>
